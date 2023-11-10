@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.validator.VisitDateValidator;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -13,16 +14,22 @@ public class PlannerController {
     }
 
     public void preview() {
-        requestVisitDay();
+        requestVisitDate();
     }
 
-    private void requestVisitDay() {
-        while (true) {
+    private void requestVisitDate() {
+        boolean isValidate;
+        do {
+            String userInputVisitDate = inputView.inputVisitDate();
             try {
-                inputView.inputVisitDate();
+                VisitDateValidator.validateBlank(userInputVisitDate);
+                VisitDateValidator.validateNumeric(userInputVisitDate);
+                VisitDateValidator.validateDateRange(userInputVisitDate);
+                isValidate = true;
             } catch (IllegalArgumentException e) {
-                inputView.printErrorMessage(e);
+                outputView.outputErrorMessage(e);
+                isValidate = false;
             }
-        }
+        } while (!isValidate);
     }
 }
