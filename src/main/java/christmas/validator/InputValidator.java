@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 public class InputValidator {
     private static final String COMMON_ERROR_MESSAGE = "[ERROR] 공백이 아닌 문자를 입력해주세요.\n";
     private static final String VISIT_DATE_ERROR_MESSAGE = "[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.\n";
-    private static final String ORDER_MENU_ERROR_MESSAGE = "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.\n";
+    private static final String ORDER_ERROR_MESSAGE = "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.\n";
     private static final int MONTH_START_DATE = 1;
     private static final int MONTH_END_DATE = 31;
 
@@ -18,9 +18,9 @@ public class InputValidator {
         validateDateRange(Integer.parseInt(userInputVisitDate));
     }
 
-    public static void validateOrderMenu(String userInputOrderMenu) {
-        validateBlank(userInputOrderMenu);
-        validateMenuFormat(userInputOrderMenu);
+    public static void validateOrder(String userInputOrder) {
+        validateBlank(userInputOrder);
+        validateOrderFormat(userInputOrder);
     }
 
     private static void validateBlank(String input) {
@@ -45,9 +45,9 @@ public class InputValidator {
         return (MONTH_START_DATE <= parsedVisitDate) && (MONTH_END_DATE >= parsedVisitDate);
     }
 
-    private static void validateMenuFormat(String userInputOrderMenu) {
-        if (!MENU_PATTERN.matcher(userInputOrderMenu).matches()) {
-            throw new IllegalArgumentException(ORDER_MENU_ERROR_MESSAGE);
+    private static void validateOrderFormat(String userInputOrder) {
+        if (!MENU_PATTERN.matcher(userInputOrder).matches()) {
+            throw new IllegalArgumentException(ORDER_ERROR_MESSAGE);
         }
     }
 }

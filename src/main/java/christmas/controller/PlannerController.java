@@ -14,7 +14,7 @@ public class PlannerController {
 
     public void preview() {
         inputVisitDate();
-        inputOrderMenu();
+        inputOrder();
     }
 
     private void inputVisitDate() {
@@ -30,11 +30,11 @@ public class PlannerController {
         } while (!isValidate);
     }
 
-    private void inputOrderMenu() {
+    private void inputOrder() {
         boolean isValidate;
         do {
             try {
-                String userInputOrderMenu = inputView.inputOrderMenu();
+                String userInputOrder = inputView.inputOrder();
                 isValidate = true;
             } catch (IllegalArgumentException e) {
                 outputView.outputErrorMessage(e);
