@@ -39,8 +39,9 @@ class InputViewTest {
     private String getOutput() {
         return outputStreamCaptor.toString();
     }
+
     @Nested
-    class 방문_날짜_입력시_{
+    class 방문_날짜_입력시_ {
         @ParameterizedTest
         @ValueSource(strings = {" ", "\n", "\r", "\t"})
         void 비었거나_공백이면_예외를_발생시킨다(String userInputVisitDate) {
@@ -52,6 +53,14 @@ class InputViewTest {
         @ParameterizedTest
         @ValueSource(strings = {"1.23", "1 23", "-1000", "테스트"})
         void 숫자_이외의_문자면_예외를_발생시킨다(String userInputVisitDate) {
+            inputValue(userInputVisitDate);
+
+            assertThatIllegalArgumentException().isThrownBy(inputView::inputVisitDate);
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"0", "32"})
+        void 날짜_범위_밖의_숫자면_예외를_발생시킨다(String userInputVisitDate) {
             inputValue(userInputVisitDate);
 
             assertThatIllegalArgumentException().isThrownBy(inputView::inputVisitDate);
