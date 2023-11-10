@@ -1,5 +1,6 @@
 package christmas.view;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import camp.nextstep.edu.missionutils.Console;
@@ -64,6 +65,15 @@ class InputViewTest {
             inputValue(userInputVisitDate);
 
             assertThatIllegalArgumentException().isThrownBy(inputView::inputVisitDate);
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"1", "15", "31"})
+        void 정상적인_날짜면_숫자를_반환한다(String userInputVisitDate) {
+            inputValue(userInputVisitDate);
+            int parsedVisitDate = Integer.parseInt(userInputVisitDate);
+
+            assertThat(inputView.inputVisitDate()).isEqualTo(parsedVisitDate);
         }
     }
 }
