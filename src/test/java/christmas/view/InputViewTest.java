@@ -49,5 +49,12 @@ class InputViewTest {
             assertThatIllegalArgumentException().isThrownBy(inputView::inputVisitDate);
         }
 
+        @ParameterizedTest
+        @ValueSource(strings = {"1.23", "1 23", "-1000", "테스트"})
+        void 숫자_이외의_문자면_예외를_발생시킨다(String userInputVisitDate) {
+            inputValue(userInputVisitDate);
+
+            assertThatIllegalArgumentException().isThrownBy(inputView::inputVisitDate);
+        }
     }
 }
