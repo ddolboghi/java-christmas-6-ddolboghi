@@ -2,6 +2,7 @@ package christmas.view;
 
 import christmas.io.Input;
 import christmas.io.Output;
+import christmas.validator.InputValidator;
 
 public class InputView {
     private static final String ASK_VISIT_DATE = "12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)";
@@ -9,6 +10,15 @@ public class InputView {
 
     public String inputVisitDate() {
         Output.writeLine(ASK_VISIT_DATE);
-        return Input.readLine();
+        String userInputVisitDate = Input.readLine();
+        InputValidator.validateVisitDate(userInputVisitDate);
+        return userInputVisitDate;
+    }
+
+    public String inputOrderMenu() {
+        Output.writeLine(ASK_ORDER_MENU);
+        String userInputOrderMenu = Input.readLine();
+        InputValidator.validateOrderMenu(userInputOrderMenu);
+        return userInputOrderMenu;
     }
 }
