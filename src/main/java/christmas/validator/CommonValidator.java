@@ -5,8 +5,7 @@ public class CommonValidator {
 
     public static void validateBlank(String input) {
         if (input == null || input.isBlank()) {
-            System.out.println(COMMON_ERROR_MESSAGE);
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(COMMON_ERROR_MESSAGE);
         }
     }
 }
