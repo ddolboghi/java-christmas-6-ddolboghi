@@ -10,7 +10,7 @@ public class InputValidator {
     private static final int MONTH_END_DATE = 31;
 
     private static final Pattern NUMERIC_PATTERN = Pattern.compile("\\d+");
-    private static final Pattern MENU_PATTERN = Pattern.compile("([가-힣]+-\\d+,)*([가-힣]+-\\d+)$");
+    private static final Pattern MENU_PATTERN = Pattern.compile("([가-힣]+-[1-9]\\d*,)*([가-힣]+-[1-9]\\d*)$");
 
     public static void validateVisitDate(String userInputVisitDate) {
         validateBlank(userInputVisitDate);
