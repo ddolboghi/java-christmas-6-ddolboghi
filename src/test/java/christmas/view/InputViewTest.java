@@ -30,6 +30,7 @@ class InputViewTest {
 
     @Nested
     class 방문_날짜_입력시_ {
+
         @ParameterizedTest
         @ValueSource(strings = {" ", "\n", "\r", "\t"})
         void 비었거나_공백이면_예외를_발생시킨다(String userInputVisitDate) {
@@ -56,11 +57,47 @@ class InputViewTest {
 
         @ParameterizedTest
         @ValueSource(strings = {"1", "15", "31"})
-        void 정상적인_날짜면_숫자를_반환한다(String userInputVisitDate) {
+        void 정상적인_날짜면_해당_값을_반환한다(String userInputVisitDate) {
             inputValue(userInputVisitDate);
-            int parsedVisitDate = Integer.parseInt(userInputVisitDate);
 
-            assertThat(inputView.inputVisitDate()).isEqualTo(parsedVisitDate);
+            assertThat(inputView.inputVisitDate()).isEqualTo(userInputVisitDate);
+        }
+    }
+
+    @Nested
+    class 주문메뉴와_개수_입력_시 {
+
+        @ParameterizedTest
+        @ValueSource(strings = {" ", "\n", "\r", "\t"})
+        void 비었거나_공백이면_예외를_발생시킨다(String userInputOrderMenu) {
+            inputValue(userInputOrderMenu);
+
+            assertThatIllegalArgumentException().isThrownBy(inputView::inputOrderMenu);
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {" ", ":", ",", "=", "--"})
+        void 입력형식에_맞지_않으면_예외를_발생시킨다(String delimiter) {
+            String userInputOrderMenu = String.format("바비큐립%s1", delimiter);
+            inputValue(userInputOrderMenu);
+
+            assertThatIllegalArgumentException().isThrownBy(inputView::inputOrderMenu);
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"바비큐립-0", "바비큐립-", "바비큐립"})
+        void 메뉴의_개수가_0개거나_없으면_예외를_발생시킨다(String userInputOrderMenu) {
+            inputValue(userInputOrderMenu);
+
+            assertThatIllegalArgumentException().isThrownBy(inputView::inputOrderMenu);
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"바비큐립-10", "해산물파스타-2,레드와인-1,초코케이크-1"})
+        void 정상적인_형식이면_해당_값을_반환한다(String userInputOrderMenu) {
+            inputValue(userInputOrderMenu);
+
+            assertThat(inputView.inputOrderMenu()).isEqualTo(userInputOrderMenu);
         }
     }
 }
