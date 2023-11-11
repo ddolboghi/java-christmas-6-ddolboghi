@@ -1,5 +1,7 @@
 package christmas.validator;
 
+import static christmas.util.exception.ErrorMessage.COMMON_ERROR_MESSAGE;
+import static christmas.util.exception.ErrorMessage.ORDER_ERROR_MESSAGE;
 import static christmas.util.exception.ErrorMessage.PREFIX;
 import static christmas.util.exception.ErrorMessage.VISIT_DATE_ERROR_MESSAGE;
 
@@ -12,7 +14,6 @@ public class InputValidator {
     private static final BigInteger MONTH_END_DATE = new BigInteger("31");
     private static final Pattern NUMERIC_PATTERN = Pattern.compile("\\d+");
     private static final Pattern ORDER_PATTERN = Pattern.compile("([가-힣]+-\\d+,)*([가-힣]+-\\d+)$");
-    private static final String ERROR_MESSAGE = PREFIX + VISIT_DATE_ERROR_MESSAGE;
 
     public static void validateVisitDate(String userInputVisitDate) {
         validateBlank(userInputVisitDate);
@@ -27,19 +28,19 @@ public class InputValidator {
 
     private static void validateBlank(String input) {
         if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException(ERROR_MESSAGE);
+            throw new IllegalArgumentException(COMMON_ERROR_MESSAGE);
         }
     }
 
     private static void validateNumeric(String userInputVisitDate) {
         if (!NUMERIC_PATTERN.matcher(userInputVisitDate).matches()) {
-            throw new IllegalArgumentException(ERROR_MESSAGE);
+            throw new IllegalArgumentException(PREFIX + VISIT_DATE_ERROR_MESSAGE);
         }
     }
 
     private static void validateDateRange(String userInputVisitDate) {
         if (isUnderDateRange(userInputVisitDate) || isOverDateRange(userInputVisitDate)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE);
+            throw new IllegalArgumentException(PREFIX + VISIT_DATE_ERROR_MESSAGE);
         }
     }
 
@@ -53,7 +54,7 @@ public class InputValidator {
 
     private static void validateOrderFormat(String userInputOrder) {
         if (!ORDER_PATTERN.matcher(userInputOrder).matches()) {
-            throw new IllegalArgumentException(ERROR_MESSAGE);
+            throw new IllegalArgumentException(PREFIX + ORDER_ERROR_MESSAGE);
         }
     }
 }
