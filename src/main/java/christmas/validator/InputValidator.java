@@ -28,7 +28,7 @@ public class InputValidator {
 
     private static void validateBlank(String input) {
         if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException(COMMON_ERROR_MESSAGE);
+            throw new IllegalArgumentException(PREFIX + COMMON_ERROR_MESSAGE);
         }
     }
 
