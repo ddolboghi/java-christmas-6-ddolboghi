@@ -62,10 +62,10 @@ public class DomainValidator {
             validateAmountOfOneMenu(amount);
             amountSum += Integer.parseInt(amount);
         }
-        validateSumOfMenuAmounts(amountSum);
+        validateAmountSumOfOrder(amountSum);
     }
 
-    private static void validateSumOfMenuAmounts(int amountSum) {
+    private static void validateAmountSumOfOrder(int amountSum) {
         if (amountSum > MAX_MENU_AMOUNT.intValue()) {
             throw new IllegalArgumentException(ERROR_MESSAGE);
         }
