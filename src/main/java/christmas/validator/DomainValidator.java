@@ -8,10 +8,10 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 public class DomainValidator {
-    private static final String ONLY_CATEGORY_OF_ORDER = "drink";
+    private static final String ONLY_CATEGORY = "drink";
     private static final int COMPARE_EQUAL_VALUE_RESULT = 0;
     private static final BigInteger MIN_MENU_AMOUNT = new BigInteger("1");
     private static final BigInteger MAX_MENU_AMOUNT = new BigInteger("20");
@@ -24,16 +24,15 @@ public class DomainValidator {
     }
 
     private static void validateMenuExist(List<String> allMenuOfOrder) {
-        allMenuOfOrder.removeAll(getKoreanNamesOfMenu());
-        if (!allMenuOfOrder.isEmpty()) {
+        if (!getKoreanNamesOfMenu().containsAll(allMenuOfOrder)) {
             throw new IllegalArgumentException(ERROR_MESSAGE);
         }
     }
 
-    private static List<String> getKoreanNamesOfMenu() {
+    private static Set<String> getKoreanNamesOfMenu() {
         return Arrays.stream(Menu.values())
                 .map(Menu::getKoreanName)
-                .toList();
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     private static void validateDuplicateMenu(List<String> allMenuOfOrder) {
@@ -43,17 +42,16 @@ public class DomainValidator {
     }
 
     private static void validateOnlyCategory(List<String> allMenuOfOrder) {
-        allMenuOfOrder.removeAll(getOnlyCategoryMenuNames());
-        if (allMenuOfOrder.isEmpty()) {
+        if (getOnlyCategoryMenuNames().containsAll(allMenuOfOrder)) {
             throw new IllegalArgumentException(ERROR_MESSAGE);
         }
     }
 
-    private static List<String> getOnlyCategoryMenuNames() {
-        return Stream.of(Menu.values())
-                .filter(menu -> ONLY_CATEGORY_OF_ORDER.equals(menu.getCategory()))
+    private static Set<String> getOnlyCategoryMenuNames() {
+        return Arrays.stream(Menu.values())
+                .filter(menu -> ONLY_CATEGORY.equals(menu.getCategory()))
                 .map(Menu::getKoreanName)
-                .toList();
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     public static void validateAmountOfOrder(List<String> allAmountOfOrder) {
