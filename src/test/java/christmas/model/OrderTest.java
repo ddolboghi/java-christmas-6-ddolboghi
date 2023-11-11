@@ -4,12 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import camp.nextstep.edu.missionutils.Console;
+import christmas.util.Menu;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -53,31 +55,54 @@ class OrderTest {
         assertThatIllegalArgumentException().isThrownBy(() -> new Order(userInputOrder));
     }
 
-    @Test
-    void 정상적인_주문을_입력받으면_주문_내역을_만든다() {
-        String userInputOrder = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
+    @Nested
+    class 정상적인_주문이면 {
+        private final String userInputOrder = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
+        private final Order order = new Order(userInputOrder);
 
-        Order order = new Order(userInputOrder);
+        @Test
+        void 주문_내역을_만든다() {
+            assertThat(order.getOrder()).isEqualTo(createOrder());
+        }
 
-        assertThat(order.getOrder()).isEqualTo(createOrder(userInputOrder));
-    }
+        @Test
+        void 총주문_금액을_구한다() {
+            int totalCost = 142000;
 
-    private Map<String, Integer> createOrder(String userInputOrder) {
-        return splitOrder(userInputOrder).stream()
-                .map(this::splitMenuAndAmount)
-                .collect(Collectors.toMap(
-                        menuAndAmount -> menuAndAmount.get(0),
-                        menuAndAmount -> Integer.parseInt(menuAndAmount.get(1))
-                ));
-    }
+            assertThat(order.getTotalCost()).isEqualTo(totalCost);
+        }
 
-    private List<String> splitOrder(String userInputOrder) {
-        return Arrays.stream(userInputOrder.split(","))
-                .map(String::trim)
-                .toList();
-    }
+        @Test
+        void 디저트_개수를_구한다() {
+            int dessertAmount = 2;
 
-    private List<String> splitMenuAndAmount(String eachOrder) {
-        return new ArrayList<>(Arrays.asList(eachOrder.split("-")));
+            assertThat(order.getDessertAmount()).isEqualTo(dessertAmount);
+        }
+
+        @Test
+        void 메인메뉴_개수를_구한다() {
+            int mainAmount = 2;
+
+            assertThat(order.getMainAmount()).isEqualTo(mainAmount);
+        }
+
+        private Map<Menu, Integer> createOrder() {
+            return splitOrder().stream()
+                    .map(this::splitMenuAndAmount)
+                    .collect(Collectors.toMap(
+                            menuAndAmount -> Menu.findMenuByKoreanName(menuAndAmount.get(0)),
+                            menuAndAmount -> Integer.parseInt(menuAndAmount.get(1))
+                    ));
+        }
+
+        private List<String> splitOrder() {
+            return Arrays.stream(userInputOrder.split(","))
+                    .map(String::trim)
+                    .toList();
+        }
+
+        private List<String> splitMenuAndAmount(String eachOrder) {
+            return new ArrayList<>(Arrays.asList(eachOrder.split("-")));
+        }
     }
 }
