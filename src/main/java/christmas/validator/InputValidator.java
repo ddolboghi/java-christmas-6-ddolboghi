@@ -1,21 +1,23 @@
 package christmas.validator;
 
+import static christmas.util.exception.ErrorMessage.PREFIX;
+import static christmas.util.exception.ErrorMessage.VISIT_DATE_ERROR_MESSAGE;
+
+import java.math.BigInteger;
 import java.util.regex.Pattern;
 
 public class InputValidator {
-    private static final String COMMON_ERROR_MESSAGE = "[ERROR] 공백이 아닌 문자를 입력해주세요.\n";
-    private static final String VISIT_DATE_ERROR_MESSAGE = "[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.\n";
-    private static final String ORDER_ERROR_MESSAGE = "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.\n";
-    private static final int MONTH_START_DATE = 1;
-    private static final int MONTH_END_DATE = 31;
-
+    private static final int COMPARE_EQUAL_VALUE_RESULT = 0;
+    private static final BigInteger MONTH_START_DATE = new BigInteger("1");
+    private static final BigInteger MONTH_END_DATE = new BigInteger("31");
     private static final Pattern NUMERIC_PATTERN = Pattern.compile("\\d+");
-    private static final Pattern MENU_PATTERN = Pattern.compile("([가-힣]+-[1-9]\\d*,)*([가-힣]+-[1-9]\\d*)$");
+    private static final Pattern ORDER_PATTERN = Pattern.compile("([가-힣]+-\\d+,)*([가-힣]+-\\d+)$");
+    private static final String ERROR_MESSAGE = PREFIX + VISIT_DATE_ERROR_MESSAGE;
 
     public static void validateVisitDate(String userInputVisitDate) {
         validateBlank(userInputVisitDate);
         validateNumeric(userInputVisitDate);
-        validateDateRange(Integer.parseInt(userInputVisitDate));
+        validateDateRange(userInputVisitDate);
     }
 
     public static void validateOrder(String userInputOrder) {
@@ -25,29 +27,33 @@ public class InputValidator {
 
     private static void validateBlank(String input) {
         if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException(COMMON_ERROR_MESSAGE);
+            throw new IllegalArgumentException(ERROR_MESSAGE);
         }
     }
 
     private static void validateNumeric(String userInputVisitDate) {
         if (!NUMERIC_PATTERN.matcher(userInputVisitDate).matches()) {
-            throw new IllegalArgumentException(VISIT_DATE_ERROR_MESSAGE);
+            throw new IllegalArgumentException(ERROR_MESSAGE);
         }
     }
 
-    private static void validateDateRange(int parsedVisitDate) {
-        if (!isInRange(parsedVisitDate)) {
-            throw new IllegalArgumentException(VISIT_DATE_ERROR_MESSAGE);
+    private static void validateDateRange(String userInputVisitDate) {
+        if (isUnderDateRange(userInputVisitDate) || isOverDateRange(userInputVisitDate)) {
+            throw new IllegalArgumentException(ERROR_MESSAGE);
         }
     }
 
-    private static boolean isInRange(int parsedVisitDate) {
-        return (MONTH_START_DATE <= parsedVisitDate) && (MONTH_END_DATE >= parsedVisitDate);
+    private static boolean isUnderDateRange(String userInputVisitDate) {
+        return new BigInteger(userInputVisitDate).compareTo(MONTH_START_DATE) < COMPARE_EQUAL_VALUE_RESULT;
+    }
+
+    private static boolean isOverDateRange(String userInputVisitDate) {
+        return new BigInteger(userInputVisitDate).compareTo(MONTH_END_DATE) > COMPARE_EQUAL_VALUE_RESULT;
     }
 
     private static void validateOrderFormat(String userInputOrder) {
-        if (!MENU_PATTERN.matcher(userInputOrder).matches()) {
-            throw new IllegalArgumentException(ORDER_ERROR_MESSAGE);
+        if (!ORDER_PATTERN.matcher(userInputOrder).matches()) {
+            throw new IllegalArgumentException(ERROR_MESSAGE);
         }
     }
 }
