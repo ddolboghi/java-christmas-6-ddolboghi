@@ -48,7 +48,7 @@ class InputViewTest {
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"0", "32"})
+        @ValueSource(strings = {"0", "32", "30000000000000000"})
         void 날짜_범위_밖의_숫자면_예외를_발생시킨다(String userInputVisitDate) {
             inputValue(userInputVisitDate);
 
@@ -72,24 +72,15 @@ class InputViewTest {
         void 비었거나_공백이면_예외를_발생시킨다(String userInputOrderMenu) {
             inputValue(userInputOrderMenu);
 
-            assertThatIllegalArgumentException().isThrownBy(inputView::inputOrderMenu);
+            assertThatIllegalArgumentException().isThrownBy(inputView::inputOrder);
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {" ", ":", ",", "=", "--"})
-        void 입력형식에_맞지_않으면_예외를_발생시킨다(String delimiter) {
-            String userInputOrderMenu = String.format("바비큐립%s1", delimiter);
+        @ValueSource(strings = {"바비큐립", "바비큐립1", "바비큐립 1", "바비큐립=1", "바비큐립:1"})
+        void 입력형식에_맞지_않으면_예외를_발생시킨다(String userInputOrderMenu) {
             inputValue(userInputOrderMenu);
 
-            assertThatIllegalArgumentException().isThrownBy(inputView::inputOrderMenu);
-        }
-
-        @ParameterizedTest
-        @ValueSource(strings = {"바비큐립-0", "바비큐립-", "바비큐립"})
-        void 메뉴의_개수가_0개거나_없으면_예외를_발생시킨다(String userInputOrderMenu) {
-            inputValue(userInputOrderMenu);
-
-            assertThatIllegalArgumentException().isThrownBy(inputView::inputOrderMenu);
+            assertThatIllegalArgumentException().isThrownBy(inputView::inputOrder);
         }
 
         @ParameterizedTest
@@ -97,7 +88,7 @@ class InputViewTest {
         void 정상적인_형식이면_해당_값을_반환한다(String userInputOrderMenu) {
             inputValue(userInputOrderMenu);
 
-            assertThat(inputView.inputOrderMenu()).isEqualTo(userInputOrderMenu);
+            assertThat(inputView.inputOrder()).isEqualTo(userInputOrderMenu);
         }
     }
 }
