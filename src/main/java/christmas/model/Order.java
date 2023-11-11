@@ -3,6 +3,7 @@ package christmas.model;
 import christmas.validator.DomainValidator;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,15 +14,21 @@ public class Order {
     private static final int INDEX_OF_MENU = 0;
     private static final int INDEX_OF_AMOUNT = 1;
     private final String userInputOrder;
+    private Map<String, Integer> order;
 
     public Order(String userInputOrder) {
         this.userInputOrder = userInputOrder;
         DomainValidator.validateMenuOfOrder(getAllMenuOfOrder());
         DomainValidator.validateAmountOfOrder(getAllAmountOfOrder());
+        takeOrder();
     }
 
-    private Map<String, Integer> createOrder() {
-        return splitOrder().stream()
+    public Map<String, Integer> getOrder() {
+        return Collections.unmodifiableMap(order);
+    }
+
+    private void takeOrder() {
+        order = splitOrder().stream()
                 .map(this::splitMenuAndAmount)
                 .collect(Collectors.toMap(
                         menuAndAmount -> menuAndAmount.get(INDEX_OF_MENU),
@@ -33,7 +40,7 @@ public class Order {
         return splitOrder().stream()
                 .map(this::splitMenuAndAmount)
                 .map(menuAndAmount -> menuAndAmount.get(INDEX_OF_MENU))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private List<String> getAllAmountOfOrder() {
@@ -44,7 +51,8 @@ public class Order {
     }
 
     private List<String> splitOrder() {
-        return new ArrayList<>(Arrays.asList(userInputOrder.split(ORDER_DELIMITER)));
+        return Arrays.stream(userInputOrder.split(ORDER_DELIMITER)).map(String::trim)
+                .toList();
     }
 
     private List<String> splitMenuAndAmount(String eachOrder) {
