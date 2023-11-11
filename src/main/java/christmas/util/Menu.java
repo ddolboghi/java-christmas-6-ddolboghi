@@ -1,5 +1,7 @@
 package christmas.util;
 
+import java.util.stream.Stream;
+
 public enum Menu {
     PINE_MUSHROOM_SOUP("양송이수프", "appetizer", 6000),
     TAPAS("타파스", "appetizer", 5500),
@@ -22,6 +24,14 @@ public enum Menu {
         this.koreanName = koreanName;
         this.category = category;
         this.price = price;
+    }
+
+    //이 메서드는 Order에서만 사용되고, 검증된 값만 받으므로 null을 반환하지 않는다.
+    public static Menu findMenuByKoreanName(String koreanName) {
+        return Stream.of(Menu.values())
+                .filter(menu -> menu.koreanName.equals(koreanName))
+                .findFirst()
+                .get();
     }
 
     public String getKoreanName() {
