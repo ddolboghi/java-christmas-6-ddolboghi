@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.model.Order;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -30,16 +31,13 @@ public class PlannerController {
         } while (!isValidate);
     }
 
-    private void inputOrder() {
-        boolean isValidate;
+    private Order inputOrder() {
         do {
             try {
-                String userInputOrder = inputView.inputOrder();
-                isValidate = true;
+                return new Order(inputView.inputOrder());
             } catch (IllegalArgumentException e) {
                 outputView.outputErrorMessage(e);
-                isValidate = false;
             }
-        } while (!isValidate);
+        } while (true);
     }
 }
