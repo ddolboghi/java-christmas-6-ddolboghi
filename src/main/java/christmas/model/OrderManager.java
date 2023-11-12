@@ -1,9 +1,7 @@
 package christmas.model;
 
-import static christmas.util.OrderManagerConst.DESSERT_CATEGORY;
 import static christmas.util.OrderManagerConst.INDEX_OF_AMOUNT;
 import static christmas.util.OrderManagerConst.INDEX_OF_MENU;
-import static christmas.util.OrderManagerConst.MAIN_CATEGORY;
 import static christmas.util.OrderManagerConst.MENU_AND_AMOUNT_DELIMITER;
 import static christmas.util.OrderManagerConst.ORDER_DELIMITER;
 
@@ -39,40 +37,22 @@ public class OrderManager {
                 .sum();
     }
 
-    public int getDessertAmount() {
+    public int getMenuAmount(String menuCategory) {
         return order.keySet()
                 .stream()
-                .mapToInt(this::addDessertAmount)
+                .mapToInt(menu -> addMenuAmount(menu, menuCategory))
                 .sum();
     }
 
-    private int addDessertAmount(Menu menu) {
-        if (isDessert(menu)) {
+    private int addMenuAmount(Menu menu, String menuCategory) {
+        if (isMenuCategory(menu, menuCategory)) {
             return order.get(menu);
         }
         return 0;
     }
 
-    private boolean isDessert(Menu menu) {
-        return menu.getCategory().equals(DESSERT_CATEGORY);
-    }
-
-    public int getMainAmount() {
-        return order.keySet()
-                .stream()
-                .mapToInt(this::addMainAmount)
-                .sum();
-    }
-
-    private int addMainAmount(Menu menu) {
-        if (isMain(menu)) {
-            return order.get(menu);
-        }
-        return 0;
-    }
-
-    private boolean isMain(Menu menu) {
-        return menu.getCategory().equals(MAIN_CATEGORY);
+    private boolean isMenuCategory(Menu menu, String menuCategory) {
+        return menu.getCategory().equals(menuCategory);
     }
 
     private void takeOrder() {
