@@ -1,5 +1,7 @@
 package christmas.validator;
 
+import static christmas.util.ValidatorConst.COMPARE_EQUAL_VALUE_RESULT;
+import static christmas.util.ValidatorConst.ONLY_CATEGORY;
 import static christmas.util.exception.ErrorMessage.ORDER_ERROR_MESSAGE;
 import static christmas.util.exception.ErrorMessage.PREFIX;
 
@@ -11,8 +13,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DomainValidator {
-    private static final String ONLY_CATEGORY = "drink";
-    private static final int COMPARE_EQUAL_VALUE_RESULT = 0;
     private static final BigInteger MIN_MENU_AMOUNT = new BigInteger("1");
     private static final BigInteger MAX_MENU_AMOUNT = new BigInteger("20");
     private static final String ERROR_MESSAGE = PREFIX + ORDER_ERROR_MESSAGE;
