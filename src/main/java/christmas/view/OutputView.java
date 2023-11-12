@@ -1,6 +1,7 @@
 package christmas.view;
 
 import christmas.io.Output;
+import java.text.DecimalFormat;
 import java.util.Map;
 
 public class OutputView {
@@ -13,7 +14,9 @@ public class OutputView {
     private static final String TITLE_OF_TOTAL_BENEFITS_SUM = "<총혜택 금액>";
     private static final String TITLE_OF_TOTAL_COST_AFTER_DISCOUNT = "<할인 후 예상 결제 금액>";
     private static final String TITLE_OF_EVENT_BADGE = "<12월 이벤트 배지>";
-    private static final String ORDER_HISTORY = "%s %d개";
+    private static final String ORDER_HISTORY = "%s %d개\n";
+    private static final String MONEY = "%s원";
+    private final DecimalFormat thousandUnitFormat = new DecimalFormat("#,###");
 
     public void outputErrorMessage(IllegalArgumentException e) {
         Output.writeLine(e.getMessage());
@@ -29,8 +32,15 @@ public class OutputView {
 
     public void showOrderHistory(Map<String, Integer> orderHistory) {
         Output.writeLine(TITLE_OF_ORDER_MENU);
+        StringBuilder orderHistoryBuilder = new StringBuilder(orderHistory.size());
         for (String menuName : orderHistory.keySet()) {
-            Output.writeLine(String.format(ORDER_HISTORY, menuName, orderHistory.get(menuName)));
+            orderHistoryBuilder.append(String.format(ORDER_HISTORY, menuName, orderHistory.get(menuName)));
         }
+        Output.writeLine(orderHistoryBuilder.toString());
+    }
+
+    public void showTotalOrderCost(int totalCost) {
+        Output.writeLine(TITLE_OF_TOTAL_COST_BEFORE_DISCOUNT);
+        Output.writeLine(String.format(MONEY, thousandUnitFormat.format(totalCost)));
     }
 }

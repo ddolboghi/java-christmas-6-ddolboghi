@@ -22,6 +22,7 @@ public class PlannerController {
         saveOrder();
         showPlannerTitle();
         showOrder();
+        showTotalCost();
     }
 
     private String takeVisitDate() {
@@ -58,5 +59,9 @@ public class PlannerController {
 
     private void showOrder() {
         outputView.showOrderHistory(order.getOrder());
+    }
+
+    private void showTotalCost() {
+        outputView.showTotalOrderCost(order.getTotalCost());
     }
 }
