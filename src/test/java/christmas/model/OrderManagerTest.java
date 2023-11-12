@@ -75,14 +75,14 @@ class OrderManagerTest {
         void 디저트_개수를_구한다() {
             int dessertAmount = 2;
 
-            assertThat(orderManager.getDessertAmount()).isEqualTo(dessertAmount);
+            assertThat(orderManager.getMenuAmount("dessert")).isEqualTo(dessertAmount);
         }
 
         @Test
         void 메인메뉴_개수를_구한다() {
             int mainAmount = 2;
 
-            assertThat(orderManager.getMainAmount()).isEqualTo(mainAmount);
+            assertThat(orderManager.getMenuAmount("main")).isEqualTo(mainAmount);
         }
 
         private Map<String, Integer> createOrder() {
