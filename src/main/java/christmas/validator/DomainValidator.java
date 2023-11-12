@@ -1,7 +1,7 @@
 package christmas.validator;
 
-import static christmas.util.ValidatorConst.COMPARE_EQUAL_VALUE_RESULT;
-import static christmas.util.ValidatorConst.ONLY_CATEGORY;
+import static christmas.util.constant.ValidatorConst.COMPARE_EQUAL_VALUE_RESULT;
+import static christmas.util.constant.ValidatorConst.SINGLE_ORDER_CATEGORY;
 import static christmas.util.exception.ErrorMessage.ORDER_ERROR_MESSAGE;
 import static christmas.util.exception.ErrorMessage.PREFIX;
 
@@ -49,7 +49,7 @@ public class DomainValidator {
 
     private static Set<String> getOnlyCategoryMenuNames() {
         return Arrays.stream(Menu.values())
-                .filter(menu -> ONLY_CATEGORY.equals(menu.getCategory()))
+                .filter(menu -> SINGLE_ORDER_CATEGORY.equals(menu.getCategory()))
                 .map(Menu::getKoreanName)
                 .collect(Collectors.toUnmodifiableSet());
     }

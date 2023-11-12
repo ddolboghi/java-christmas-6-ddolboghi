@@ -1,9 +1,9 @@
 package christmas.model;
 
-import static christmas.util.OrderManagerConst.INDEX_OF_AMOUNT;
-import static christmas.util.OrderManagerConst.INDEX_OF_MENU;
-import static christmas.util.OrderManagerConst.MENU_AND_AMOUNT_DELIMITER;
-import static christmas.util.OrderManagerConst.ORDER_DELIMITER;
+import static christmas.util.constant.OrderManagerConst.INDEX_OF_AMOUNT;
+import static christmas.util.constant.OrderManagerConst.INDEX_OF_MENU;
+import static christmas.util.constant.OrderManagerConst.MENU_AND_AMOUNT_DELIMITER;
+import static christmas.util.constant.OrderManagerConst.ORDER_DELIMITER;
 
 import christmas.util.Menu;
 import christmas.validator.DomainValidator;

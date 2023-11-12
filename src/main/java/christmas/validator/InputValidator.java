@@ -1,6 +1,6 @@
 package christmas.validator;
 
-import static christmas.util.ValidatorConst.COMPARE_EQUAL_VALUE_RESULT;
+import static christmas.util.constant.ValidatorConst.COMPARE_EQUAL_VALUE_RESULT;
 import static christmas.util.exception.ErrorMessage.COMMON_ERROR_MESSAGE;
 import static christmas.util.exception.ErrorMessage.ORDER_ERROR_MESSAGE;
 import static christmas.util.exception.ErrorMessage.PREFIX;
