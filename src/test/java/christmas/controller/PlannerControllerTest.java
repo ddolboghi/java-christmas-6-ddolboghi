@@ -43,27 +43,37 @@ class PlannerControllerTest {
 
     @Test
     void 잘못된_방문_날짜를_입력하면_정상적인_값을_입력받을_때까지_재입력받는다() {
-        String userInputVisitDate = " \n1.23\n0\n32\n25\n티본스테이크-1";
-        inputValue(userInputVisitDate);
+        String userInputWrongVisitDate = " \n1.23\n0\n32\n25\n티본스테이크-1";
+        inputValue(userInputWrongVisitDate);
 
         assertDoesNotThrow(plannerController::preview);
     }
 
     @Test
     void 잘못된_주문메뉴와_개수를_입력하면_정상적인_값을_입력받을_때까지_재입력받는다() {
-        String userInputVisitDate = " 25\n티본스테이크\n티본스테이크-0\n티본스테이크1\n티본스테이크 1\n티본스테이크:1\n티본스테이크-1";
-        inputValue(userInputVisitDate);
+        String userInputWrongMenuAndAmount = " 25\n티본스테이크\n티본스테이크-0\n티본스테이크1\n티본스테이크 1\n티본스테이크:1\n티본스테이크-1";
+        inputValue(userInputWrongMenuAndAmount);
 
         assertDoesNotThrow(plannerController::preview);
     }
 
     @Test
     void 정상적인_방문날짜와_주문을_입력하면_방문날짜와_주문메뉴를_출력한다() {
-        String userInputVisitDate = " 25\n티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1";
-        inputValue(userInputVisitDate);
+        String userInput = " 25\n티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1";
+        inputValue(userInput);
 
         plannerController.preview();
 
         assertThat(getOutput()).contains("25", "티본스테이크 1개", "해산물파스타 1개", "레드와인 1개", "초코케이크 1개");
+    }
+
+    @Test
+    void 할인_전_총주문_금액을_출력한다() {
+        String userInput = "25\n아이스크림-10";
+        inputValue(userInput);
+
+        plannerController.preview();
+
+        assertThat(getOutput()).contains("50,000원");
     }
 }
