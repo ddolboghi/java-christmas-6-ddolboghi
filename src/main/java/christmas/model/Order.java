@@ -4,7 +4,6 @@ import christmas.util.Menu;
 import christmas.validator.DomainValidator;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +26,9 @@ public class Order {
         takeOrder();
     }
 
-    public Map<Menu, Integer> getOrder() {
-        return Collections.unmodifiableMap(order);
+    public Map<String, Integer> getOrder() {
+        return order.keySet().stream()
+                .collect(Collectors.toMap(Menu::getKoreanName, menu -> order.get(menu), (a, b) -> b));
     }
 
     public int getTotalCost() {

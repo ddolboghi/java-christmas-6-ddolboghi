@@ -1,12 +1,15 @@
 package christmas.controller;
 
 import christmas.model.Order;
+import christmas.model.PlannerManager;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
 public class PlannerController {
     private final InputView inputView;
     private final OutputView outputView;
+    private PlannerManager plannerManager;
+    private Order order;
 
     public PlannerController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
@@ -14,24 +17,28 @@ public class PlannerController {
     }
 
     public void preview() {
-        inputVisitDate();
-        inputOrder();
+        outputView.introPlanner();
+        saveVisitDate();
+        saveOrder();
+        showPlannerTitle();
+        showOrder();
     }
 
-    private void inputVisitDate() {
-        boolean isValidate;
+    private String takeVisitDate() {
         do {
             try {
-                String userInputVisitDate = inputView.inputVisitDate();
-                isValidate = true;
+                return inputView.inputVisitDate();
             } catch (IllegalArgumentException e) {
                 outputView.outputErrorMessage(e);
-                isValidate = false;
             }
-        } while (!isValidate);
+        } while (true);
     }
 
-    private Order inputOrder() {
+    private void saveVisitDate() {
+        plannerManager = new PlannerManager(takeVisitDate());
+    }
+
+    private Order takeOrder() {
         do {
             try {
                 return new Order(inputView.inputOrder());
@@ -39,5 +46,17 @@ public class PlannerController {
                 outputView.outputErrorMessage(e);
             }
         } while (true);
+    }
+
+    private void saveOrder() {
+        order = takeOrder();
+    }
+
+    private void showPlannerTitle() {
+        outputView.showPlannerTitle(plannerManager.getVisitDate());
+    }
+
+    private void showOrder() {
+        outputView.showOrderHistory(order.getOrder());
     }
 }
