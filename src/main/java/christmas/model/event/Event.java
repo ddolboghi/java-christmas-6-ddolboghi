@@ -3,7 +3,7 @@ package christmas.model.event;
 public interface Event {
     String getEventName();
 
-    int discount();
+    int getDiscount();
 
     boolean isApplied();
 }

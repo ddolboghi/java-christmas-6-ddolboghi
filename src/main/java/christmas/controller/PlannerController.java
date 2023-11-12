@@ -1,15 +1,16 @@
 package christmas.controller;
 
+import christmas.model.EventManager;
 import christmas.model.OrderManager;
-import christmas.model.PlannerManager;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
 public class PlannerController {
+    private int visitDate;
     private final InputView inputView;
     private final OutputView outputView;
-    private PlannerManager plannerManager;
     private OrderManager orderManager;
+    private EventManager eventManager;
 
     public PlannerController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
@@ -43,9 +44,9 @@ public class PlannerController {
     }
 
     private void setManager() {
-        String visitDate = takeVisitDate();
+        visitDate = Integer.parseInt(takeVisitDate());
         orderManager = takeOrder();
-        plannerManager = new PlannerManager(visitDate, orderManager.getTotalCost());
+        eventManager = new EventManager(orderManager, visitDate);
     }
 
     private void showPlanner() {
@@ -56,7 +57,7 @@ public class PlannerController {
     }
 
     private void showPlannerTitle() {
-        outputView.showPlannerTitle(plannerManager.getVisitDate());
+        outputView.showPlannerTitle(visitDate);
     }
 
     private void showOrder() {
@@ -68,6 +69,6 @@ public class PlannerController {
     }
 
     private void showPresentationMenu() {
-        outputView.showPresentationMenu(plannerManager.getPresentationMenu());
+        outputView.showPresentationMenu(eventManager.getPresentMenu());
     }
 }
