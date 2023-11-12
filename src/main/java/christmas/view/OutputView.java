@@ -1,21 +1,18 @@
 package christmas.view;
 
+import static christmas.view.OutputMessage.INTRODUCTION_OF_PLANNER;
+import static christmas.view.OutputMessage.MENU_AND_AMOUNT;
+import static christmas.view.OutputMessage.MONETARY_UNIT;
+import static christmas.view.OutputMessage.TITLE_OF_ORDER_MENU;
+import static christmas.view.OutputMessage.TITLE_OF_PLANNER;
+import static christmas.view.OutputMessage.TITLE_OF_PRESENT_MENU;
+import static christmas.view.OutputMessage.TITLE_OF_TOTAL_COST_BEFORE_DISCOUNT;
+
 import christmas.io.Output;
 import java.text.DecimalFormat;
 import java.util.Map;
 
 public class OutputView {
-    private static final String INTRODUCTION_OF_PLANNER = "안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.";
-    private static final String TITLE_OF_PLANNER = "12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n";
-    private static final String TITLE_OF_ORDER_MENU = "<주문 메뉴>";
-    private static final String TITLE_OF_TOTAL_COST_BEFORE_DISCOUNT = "<할인 전 총주문 금액>";
-    private static final String TITLE_OF_PRESENT_MENU = "<증정 메뉴>";
-    private static final String TITLE_OF_BENEFITS = "<혜택 내역>";
-    private static final String TITLE_OF_TOTAL_BENEFITS_SUM = "<총혜택 금액>";
-    private static final String TITLE_OF_TOTAL_COST_AFTER_DISCOUNT = "<할인 후 예상 결제 금액>";
-    private static final String TITLE_OF_EVENT_BADGE = "<12월 이벤트 배지>";
-    private static final String ORDER_HISTORY = "%s %d개\n";
-    private static final String MONEY = "%s원";
     private final DecimalFormat thousandUnitFormat = new DecimalFormat("#,###");
 
     public void outputErrorMessage(IllegalArgumentException e) {
@@ -34,13 +31,18 @@ public class OutputView {
         Output.writeLine(TITLE_OF_ORDER_MENU);
         StringBuilder orderHistoryBuilder = new StringBuilder(orderHistory.size());
         for (String menuName : orderHistory.keySet()) {
-            orderHistoryBuilder.append(String.format(ORDER_HISTORY, menuName, orderHistory.get(menuName)));
+            orderHistoryBuilder.append(String.format(MENU_AND_AMOUNT, menuName, orderHistory.get(menuName)));
         }
-        Output.writeLine(orderHistoryBuilder.toString());
+        Output.writeLine(orderHistoryBuilder.toString().trim());
     }
 
     public void showTotalOrderCost(int totalCost) {
         Output.writeLine(TITLE_OF_TOTAL_COST_BEFORE_DISCOUNT);
-        Output.writeLine(String.format(MONEY, thousandUnitFormat.format(totalCost)));
+        Output.writeLine(String.format(MONETARY_UNIT, thousandUnitFormat.format(totalCost)));
+    }
+
+    public void showPresentationMenu(String presentationMenu) {
+        Output.writeLine(TITLE_OF_PRESENT_MENU);
+        Output.writeLine(presentationMenu);
     }
 }
