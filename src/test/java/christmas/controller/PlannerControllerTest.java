@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PlannerControllerTest {
+    private static final String LINE_SEPARATOR = System.lineSeparator();
     private PlannerController plannerController;
     private ByteArrayOutputStream outputStreamCaptor;
     private PrintStream standardOut;
@@ -75,5 +76,25 @@ class PlannerControllerTest {
         plannerController.preview();
 
         assertThat(getOutput()).contains("50,000원");
+    }
+
+    @Test
+    void 증정_이벤트_대상이_아니면_증정_메뉴에_없음을_출력한다() {
+        String userInput = "25\n아이스크림-10";
+        inputValue(userInput);
+
+        plannerController.preview();
+
+        assertThat(getOutput()).contains("<증정 메뉴>" + LINE_SEPARATOR + "없음");
+    }
+
+    @Test
+    void 증정_이벤트_대상이면_증정_메뉴와_개수를_출력한다() {
+        String userInput = "25\n티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1";
+        inputValue(userInput);
+
+        plannerController.preview();
+
+        assertThat(getOutput()).contains("<증정 메뉴>" + LINE_SEPARATOR + "샴페인 1개");
     }
 }
