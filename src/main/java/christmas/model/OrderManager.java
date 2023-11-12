@@ -1,5 +1,12 @@
 package christmas.model;
 
+import static christmas.util.OrderManagerConst.DESSERT_CATEGORY;
+import static christmas.util.OrderManagerConst.INDEX_OF_AMOUNT;
+import static christmas.util.OrderManagerConst.INDEX_OF_MENU;
+import static christmas.util.OrderManagerConst.MAIN_CATEGORY;
+import static christmas.util.OrderManagerConst.MENU_AND_AMOUNT_DELIMITER;
+import static christmas.util.OrderManagerConst.ORDER_DELIMITER;
+
 import christmas.util.Menu;
 import christmas.validator.DomainValidator;
 import java.util.ArrayList;
@@ -9,17 +16,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Order {
-    private static final String ORDER_DELIMITER = ",";
-    private static final String MENU_AND_AMOUNT_DELIMITER = "-";
-    private static final int INDEX_OF_MENU = 0;
-    private static final int INDEX_OF_AMOUNT = 1;
-    private static final String DESSERT_CATEGORY = "dessert";
-    private static final String MAIN_CATEGORY = "main";
+public class OrderManager {
     private final String userInputOrder;
     private Map<Menu, Integer> order;
 
-    public Order(String userInputOrder) {
+    public OrderManager(String userInputOrder) {
         this.userInputOrder = userInputOrder;
         DomainValidator.validateMenuOfOrder(getAllMenuOfOrder());
         DomainValidator.validateAmountOfOrder(getAllAmountOfOrder());
