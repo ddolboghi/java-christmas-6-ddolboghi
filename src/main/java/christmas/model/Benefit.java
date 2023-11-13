@@ -15,12 +15,22 @@ public class Benefit {
         this.events = events;
     }
 
-    public String getPresentMenu() {
+    public String getGiftMenu() {
+        String giftMenu = null;
         for (Event event : events) {
-            if (event.getEventName().equals(PRESENTATION_EVENT_NAME) && event.isApplied()) {
-                return String.format(PRESENTATION_EVENT_MENU_AMOUNT, Menu.CHAMPAGNE.getKoreanName());
-            }
+            giftMenu = getGiftMenu(event);
+        }
+        return giftMenu;
+    }
+
+    private String getGiftMenu(Event event) {
+        if (isAppliedGiftEvent(event)) {
+            return String.format(PRESENTATION_EVENT_MENU_AMOUNT, Menu.CHAMPAGNE.getKoreanName());
         }
         return NON_PRESENT_MENU;
+    }
+
+    private boolean isAppliedGiftEvent(Event event) {
+        return event.getEventName().equals(PRESENTATION_EVENT_NAME) && event.isApplied();
     }
 }
