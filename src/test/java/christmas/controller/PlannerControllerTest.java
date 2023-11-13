@@ -12,6 +12,8 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class PlannerControllerTest {
     private static final String LINE_SEPARATOR = System.lineSeparator();
@@ -100,7 +102,7 @@ class PlannerControllerTest {
 
     @Test
     void 이벤트들중_적용된_이벤트를_출력한다() {
-        String userInput = "25\n티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1";//165000
+        String userInput = "25\n티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1";//165000원
         inputValue(userInput);
 
         plannerController.preview();
@@ -117,5 +119,15 @@ class PlannerControllerTest {
         plannerController.preview();
 
         assertThat(getOutput()).contains("<혜택 내역>" + LINE_SEPARATOR + "없음");
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"25:티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1:-31,423원", "30:초코케이크-1,제로콜라-1:0원"}, delimiter = ':')
+    void 총혜택_금액을_출력한다(String userInputVisitDate, String userInputOrder, String printTotalDiscount) {
+        inputValue(userInputVisitDate+"\n"+userInputOrder);
+
+        plannerController.preview();
+
+        assertThat(getOutput()).contains(printTotalDiscount);
     }
 }
