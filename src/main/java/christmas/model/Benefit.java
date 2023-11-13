@@ -1,8 +1,8 @@
 package christmas.model;
 
-import static christmas.util.rule.PresentationEventRule.NON_PRESENT_MENU;
-import static christmas.util.rule.PresentationEventRule.PRESENTATION_EVENT_MENU_AMOUNT;
-import static christmas.util.rule.PresentationEventRule.PRESENTATION_EVENT_NAME;
+import static christmas.util.rule.GiftEventRule.GIFT_EVENT_MENU_AMOUNT;
+import static christmas.util.rule.GiftEventRule.GIFT_EVENT_NAME;
+import static christmas.util.rule.GiftEventRule.NON_GIFT_MENU;
 
 import christmas.model.event.Event;
 import christmas.util.Menu;
@@ -16,21 +16,20 @@ public class Benefit {
     }
 
     public String getGiftMenu() {
-        String giftMenu = null;
         for (Event event : events) {
-            giftMenu = getGiftMenu(event);
+            return getGiftMenu(event);
         }
-        return giftMenu;
+        return NON_GIFT_MENU;
     }
 
     private String getGiftMenu(Event event) {
         if (isAppliedGiftEvent(event)) {
-            return String.format(PRESENTATION_EVENT_MENU_AMOUNT, Menu.CHAMPAGNE.getKoreanName());
+            return String.format(GIFT_EVENT_MENU_AMOUNT, Menu.CHAMPAGNE.getKoreanName());
         }
-        return NON_PRESENT_MENU;
+        return NON_GIFT_MENU;
     }
 
     private boolean isAppliedGiftEvent(Event event) {
-        return event.getEventName().equals(PRESENTATION_EVENT_NAME) && event.isApplied();
+        return event.getEventName().equals(GIFT_EVENT_NAME) && event.isApplied();
     }
 }
