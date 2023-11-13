@@ -3,9 +3,9 @@ package christmas.view;
 import static christmas.view.OutputMessage.INTRODUCTION_OF_PLANNER;
 import static christmas.view.OutputMessage.MENU_AND_AMOUNT;
 import static christmas.view.OutputMessage.MONETARY_UNIT;
+import static christmas.view.OutputMessage.TITLE_OF_GIFT_MENU;
 import static christmas.view.OutputMessage.TITLE_OF_ORDER_MENU;
 import static christmas.view.OutputMessage.TITLE_OF_PLANNER;
-import static christmas.view.OutputMessage.TITLE_OF_PRESENT_MENU;
 import static christmas.view.OutputMessage.TITLE_OF_TOTAL_COST_BEFORE_DISCOUNT;
 
 import christmas.io.Output;
@@ -41,8 +41,8 @@ public class OutputView {
         Output.writeLine(String.format(MONETARY_UNIT, thousandUnitFormat.format(totalCost)));
     }
 
-    public void showPresentationMenu(String presentationMenu) {
-        Output.writeLine(TITLE_OF_PRESENT_MENU);
+    public void showGiftMenu(String presentationMenu) {
+        Output.writeLine(TITLE_OF_GIFT_MENU);
         Output.writeLine(presentationMenu);
     }
 }
