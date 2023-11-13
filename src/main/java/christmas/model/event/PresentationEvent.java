@@ -1,5 +1,6 @@
 package christmas.model.event;
 
+import static christmas.util.constant.DiscountEventConst.NON_DISCOUNT_COST;
 import static christmas.util.rule.PresentationEventRule.PRESENTATION_EVENT_NAME;
 import static christmas.util.rule.PresentationEventRule.TOTAL_COST_CRITERIA;
 
@@ -19,7 +20,10 @@ public class PresentationEvent implements Event {
 
     @Override
     public int getDiscount() {
-        return Menu.CHAMPAGNE.getPrice();
+        if (isApplied()) {
+            return Menu.CHAMPAGNE.getPrice();
+        }
+        return NON_DISCOUNT_COST;
     }
 
     @Override
