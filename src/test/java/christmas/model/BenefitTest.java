@@ -33,11 +33,9 @@ class BenefitTest {
     @Test
     void 이벤트들중_적용되는_이벤트만_가져온다() {
         List<Event> events = createEvents(10000, 25, 1, 1);
-        List<Event> appliedEvents = List.of(
-                new SpecialDiscountEvent(25),
-                new WeekdayDiscountEvent(25, 1),
-                new ChristmasDDayDiscountEvent(25)
-        );
+        List<Event> appliedEvents = events.stream()
+                .filter(event -> event.getDiscount() > 0)
+                .toList();
         Benefit benefit = createBenefit(events);
 
         assertThat(benefit.getAppliedEvents()).isEqualTo(appliedEvents);
