@@ -10,6 +10,7 @@ import static christmas.view.OutputMessage.TITLE_OF_BENEFITS;
 import static christmas.view.OutputMessage.TITLE_OF_GIFT_MENU;
 import static christmas.view.OutputMessage.TITLE_OF_ORDER_MENU;
 import static christmas.view.OutputMessage.TITLE_OF_PLANNER;
+import static christmas.view.OutputMessage.TITLE_OF_TOTAL_COST_AFTER_DISCOUNT;
 import static christmas.view.OutputMessage.TITLE_OF_TOTAL_COST_BEFORE_DISCOUNT;
 import static christmas.view.OutputMessage.TITLE_OF_TOTAL_DISCOUNT;
 
@@ -81,5 +82,10 @@ public class OutputView {
             return String.format(MONETARY_UNIT, totalDiscount);
         }
         return String.format(MONETARY_UNIT, minusThousandUnitFormat.format(totalDiscount));
+    }
+
+    public void showTotalCostAfterDiscount(int totalCostAfterDiscount) {
+        Output.writeLine(TITLE_OF_TOTAL_COST_AFTER_DISCOUNT);
+        Output.writeLine(String.format(MONETARY_UNIT, thousandUnitFormat.format(totalCostAfterDiscount)));
     }
 }

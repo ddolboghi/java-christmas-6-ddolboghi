@@ -56,6 +56,7 @@ public class PlannerController {
         showGiftMenu();
         showBenefits();
         showTotalDiscount();
+        showTotalCostAfterDiscount();
     }
 
     private void showPlannerTitle() {
@@ -80,5 +81,9 @@ public class PlannerController {
 
     private void showTotalDiscount() {
         outputView.showTotalDiscount(eventManager.getTotalDiscount());
+    }
+
+    private void showTotalCostAfterDiscount() {
+        outputView.showTotalCostAfterDiscount(eventManager.calculateTotalCostAfterDiscount());
     }
 }
