@@ -50,6 +50,10 @@ public class EventManager {
         return benefit.sumDiscounts();
     }
 
+    public int calculateTotalCostAfterDiscount() {
+        return orderManager.getTotalCost() - benefit.sumDiscountsExceptGiftEvent();
+    }
+
     private List<Event> getAllEvents() {
         return Stream.of(
                 new ChristmasDDayDiscountEvent(visitDate),
