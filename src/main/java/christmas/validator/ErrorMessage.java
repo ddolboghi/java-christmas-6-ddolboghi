@@ -1,4 +1,4 @@
-package christmas.util.exception;
+package christmas.validator;
 
 public final class ErrorMessage {
     public static final String PREFIX = "[ERROR] ";
