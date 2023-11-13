@@ -57,6 +57,7 @@ public class PlannerController {
         showBenefits();
         showTotalDiscount();
         showTotalCostAfterDiscount();
+        showGrantedBadge();
     }
 
     private void showPlannerTitle() {
@@ -85,5 +86,9 @@ public class PlannerController {
 
     private void showTotalCostAfterDiscount() {
         outputView.showTotalCostAfterDiscount(eventManager.calculateTotalCostAfterDiscount());
+    }
+
+    private void showGrantedBadge() {
+        outputView.showGrantedBadge(eventManager.grantBadge());
     }
 }

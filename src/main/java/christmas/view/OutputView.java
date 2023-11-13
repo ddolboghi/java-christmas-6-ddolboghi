@@ -7,6 +7,7 @@ import static christmas.view.OutputMessage.MENU_AND_AMOUNT;
 import static christmas.view.OutputMessage.MONETARY_UNIT;
 import static christmas.view.OutputMessage.NO_BENEFITS;
 import static christmas.view.OutputMessage.TITLE_OF_BENEFITS;
+import static christmas.view.OutputMessage.TITLE_OF_EVENT_BADGE;
 import static christmas.view.OutputMessage.TITLE_OF_GIFT_MENU;
 import static christmas.view.OutputMessage.TITLE_OF_ORDER_MENU;
 import static christmas.view.OutputMessage.TITLE_OF_PLANNER;
@@ -87,5 +88,10 @@ public class OutputView {
     public void showTotalCostAfterDiscount(int totalCostAfterDiscount) {
         Output.writeLine(TITLE_OF_TOTAL_COST_AFTER_DISCOUNT);
         Output.writeLine(String.format(MONETARY_UNIT, thousandUnitFormat.format(totalCostAfterDiscount)));
+    }
+
+    public void showGrantedBadge(String grantedBadge) {
+        Output.writeLine(TITLE_OF_EVENT_BADGE);
+        Output.writeLine(grantedBadge);
     }
 }
