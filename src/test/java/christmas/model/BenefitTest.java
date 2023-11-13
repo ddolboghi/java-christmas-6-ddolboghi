@@ -54,10 +54,31 @@ class BenefitTest {
 
     @ParameterizedTest
     @CsvSource({"8000, 25, 0, 0, 4400", "55000, 28, 0, 1, 0"})
-    void 총혜택_금액을_계산한다(int totalCost, int visitDate, int weekdayMenuAmount, int weekendMenuAmount, int totalDiscounts) {
+    void 총혜택_금액을_계산한다(
+            int totalCost,
+            int visitDate,
+            int weekdayMenuAmount,
+            int weekendMenuAmount,
+            int totalDiscounts
+    ) {
         List<Event> events = createEvents(totalCost, visitDate, weekdayMenuAmount, weekendMenuAmount);
         Benefit benefit = createBenefit(events);
 
         assertThat(benefit.sumDiscounts()).isEqualTo(totalDiscounts);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"158000, 25, 0, 2, 4400", "55000, 28, 0, 1, 0"})
+    void 증정이벤트를_제외한_총혜택_금액을_계산한다(
+            int totalCost,
+            int visitDate,
+            int weekdayMenuAmount,
+            int weekendMenuAmount,
+            int totalDiscounts
+    ) {
+        List<Event> events = createEvents(totalCost, visitDate, weekdayMenuAmount, weekendMenuAmount);
+        Benefit benefit = createBenefit(events);
+
+        assertThat(benefit.sumDiscountsExceptGiftEvent()).isEqualTo(totalDiscounts);
     }
 }
