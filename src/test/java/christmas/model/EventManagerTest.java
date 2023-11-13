@@ -65,4 +65,19 @@ class EventManagerTest {
         //then
         assertTrue(benefits.isEmpty());
     }
+
+    @Test
+    void 할인_후_예상_결제_금액을_계산한다() {
+        //given
+        when(orderManager.getTotalCost()).thenReturn(158000);
+        when(orderManager.getMenuAmount("dessert")).thenReturn(0);
+        when(orderManager.getMenuAmount("main")).thenReturn(2);
+        eventManager = new EventManager(orderManager, 25);
+
+        //when
+        int totalCostAfterDiscount = eventManager.calculateTotalCostAfterDiscount();
+
+        //then
+        assertThat(totalCostAfterDiscount).isEqualTo(153600);
+    }
 }
