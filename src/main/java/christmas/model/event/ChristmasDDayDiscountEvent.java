@@ -17,7 +17,8 @@ public class ChristmasDDayDiscountEvent extends DiscountEvent {
     @Override
     public int getDiscount() {
         if (isApplied()) {
-            return (visitDate - CHRISTMAS_EVENT.getStartDate()) * CHRISTMAS_EVENT.getUnitDiscountCost()
+            return (visitDate - CHRISTMAS_EVENT.getStartDate())
+                    * CHRISTMAS_EVENT.getUnitDiscountCost()
                     + CHRISTMAS_EVENT.getDefaultDiscountCost();
         }
         return NON_DISCOUNT_COST;
@@ -25,6 +26,7 @@ public class ChristmasDDayDiscountEvent extends DiscountEvent {
 
     @Override
     public boolean isApplied() {
-        return visitDate >= CHRISTMAS_EVENT.getStartDate() && visitDate <= CHRISTMAS_EVENT.getEndDate();
+        return visitDate >= CHRISTMAS_EVENT.getStartDate()
+                && visitDate <= CHRISTMAS_EVENT.getEndDate();
     }
 }
