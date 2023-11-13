@@ -17,4 +17,10 @@ public class Benefit {
                 .filter(event -> event.getDiscount() > NON_DISCOUNT_COST)
                 .toList();
     }
+
+    public int sumDiscounts() {
+        return events.stream()
+                .mapToInt(Event::getDiscount)
+                .sum();
+    }
 }
