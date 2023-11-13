@@ -32,4 +32,10 @@ public class Benefit {
     private boolean isAppliedGiftEvent(Event event) {
         return event.getEventName().equals(GIFT_EVENT_NAME) && event.isApplied();
     }
+
+    public List<Event> getAppliedEvents() {
+        return events.stream()
+                .filter(Event::isApplied)
+                .toList();
+    }
 }
