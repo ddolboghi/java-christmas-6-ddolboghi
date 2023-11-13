@@ -97,4 +97,25 @@ class PlannerControllerTest {
 
         assertThat(getOutput()).contains("<증정 메뉴>" + LINE_SEPARATOR + "샴페인 1개");
     }
+
+    @Test
+    void 이벤트들중_적용된_이벤트를_출력한다() {
+        String userInput = "25\n티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1";//165000
+        inputValue(userInput);
+
+        plannerController.preview();
+
+        assertThat(getOutput()).contains(
+                "크리스마스 디데이 할인: -3,400", "평일 할인: -2,023원", "특별 할인: -1,000원", "증정 이벤트: -25,000원");
+    }
+
+    @Test
+    void 적용된_이벤트가_없으면_없음을_출력한다() {
+        String userInput = "30\n초코케이크-1,제로콜라-1";
+        inputValue(userInput);
+
+        plannerController.preview();
+
+        assertThat(getOutput()).contains("<혜택 내역>" + LINE_SEPARATOR + "없음");
+    }
 }
