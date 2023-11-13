@@ -1,10 +1,10 @@
 package christmas.validator;
 
 import static christmas.util.constant.ValidatorConst.COMPARE_EQUAL_VALUE_RESULT;
-import static christmas.util.exception.ErrorMessage.COMMON_ERROR_MESSAGE;
-import static christmas.util.exception.ErrorMessage.ORDER_ERROR_MESSAGE;
-import static christmas.util.exception.ErrorMessage.PREFIX;
-import static christmas.util.exception.ErrorMessage.VISIT_DATE_ERROR_MESSAGE;
+import static christmas.validator.ErrorMessage.COMMON_ERROR_MESSAGE;
+import static christmas.validator.ErrorMessage.ORDER_ERROR_MESSAGE;
+import static christmas.validator.ErrorMessage.PREFIX;
+import static christmas.validator.ErrorMessage.VISIT_DATE_ERROR_MESSAGE;
 
 import java.math.BigInteger;
 import java.util.regex.Pattern;
