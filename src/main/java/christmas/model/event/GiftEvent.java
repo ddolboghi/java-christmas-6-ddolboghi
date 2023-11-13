@@ -6,10 +6,10 @@ import static christmas.util.rule.PresentationEventRule.TOTAL_COST_CRITERIA;
 
 import christmas.util.Menu;
 
-public class PresentationEvent implements Event {
+public class GiftEvent implements Event {
     private final int totalCost;
 
-    public PresentationEvent(int totalCost) {
+    public GiftEvent(int totalCost) {
         this.totalCost = totalCost;
     }
 

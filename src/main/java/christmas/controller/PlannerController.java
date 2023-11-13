@@ -69,6 +69,6 @@ public class PlannerController {
     }
 
     private void showPresentationMenu() {
-        outputView.showPresentationMenu(eventManager.getPresentMenu());
+        outputView.showPresentationMenu(eventManager.getGiftMenu());
     }
 }
