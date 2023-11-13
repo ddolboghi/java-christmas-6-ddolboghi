@@ -54,6 +54,10 @@ public class EventManager {
         return orderManager.getTotalCost() - benefit.sumDiscountsExceptGiftEvent();
     }
 
+    public String grantBadge() {
+        return Badge.grantBadge(getTotalDiscount());
+    }
+
     private List<Event> getAllEvents() {
         return Stream.of(
                 new ChristmasDDayDiscountEvent(visitDate),
