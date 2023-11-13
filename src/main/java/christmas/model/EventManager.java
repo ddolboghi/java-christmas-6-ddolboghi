@@ -46,6 +46,10 @@ public class EventManager {
                 .collect(Collectors.toMap(Event::getEventName, Event::getDiscount, (a, b) -> b));
     }
 
+    public int getTotalDiscount() {
+        return benefit.sumDiscounts();
+    }
+
     private List<Event> getAllEvents() {
         return Stream.of(
                 new ChristmasDDayDiscountEvent(visitDate),

@@ -1,5 +1,6 @@
 package christmas.view;
 
+import static christmas.util.constant.DiscountEventConst.NON_DISCOUNT_COST;
 import static christmas.view.OutputMessage.BENEFIT_AND_DISCOUNT;
 import static christmas.view.OutputMessage.INTRODUCTION_OF_PLANNER;
 import static christmas.view.OutputMessage.MENU_AND_AMOUNT;
@@ -10,6 +11,7 @@ import static christmas.view.OutputMessage.TITLE_OF_GIFT_MENU;
 import static christmas.view.OutputMessage.TITLE_OF_ORDER_MENU;
 import static christmas.view.OutputMessage.TITLE_OF_PLANNER;
 import static christmas.view.OutputMessage.TITLE_OF_TOTAL_COST_BEFORE_DISCOUNT;
+import static christmas.view.OutputMessage.TITLE_OF_TOTAL_DISCOUNT;
 
 import christmas.io.Output;
 import java.text.DecimalFormat;
@@ -67,5 +69,17 @@ public class OutputView {
                             minusThousandUnitFormat.format(appliedEvents.get(event))));
         }
         return benefitBuilder.toString().trim();
+    }
+
+    public void showTotalDiscount(int totalDiscount) {
+        Output.writeLine(TITLE_OF_TOTAL_DISCOUNT);
+        Output.writeLine(getPrintTotalDiscount(totalDiscount));
+    }
+
+    private String getPrintTotalDiscount(int totalDiscount) {
+        if(totalDiscount == NON_DISCOUNT_COST) {
+            return String.format(MONETARY_UNIT, totalDiscount);
+        }
+        return String.format(MONETARY_UNIT, minusThousandUnitFormat.format(totalDiscount));
     }
 }
