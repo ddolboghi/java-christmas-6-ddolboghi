@@ -140,4 +140,14 @@ class PlannerControllerTest {
 
         assertThat(getOutput()).contains("<할인 후 예상 결제 금액>" + LINE_SEPARATOR + "158,577원");
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"25:티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1:산타", "30:초코케이크-1,제로콜라-1:없음"}, delimiter = ':')
+    void 부여된_배지를_출력한다(String userInputVisitDate, String userInputOrder, String badge) {
+        inputValue(userInputVisitDate + "\n" + userInputOrder);
+
+        plannerController.preview();
+
+        assertThat(getOutput()).contains(badge);
+    }
 }
