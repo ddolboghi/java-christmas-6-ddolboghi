@@ -54,6 +54,7 @@ public class PlannerController {
         showOrder();
         showTotalCost();
         showGiftMenu();
+        showBenefits();
     }
 
     private void showPlannerTitle() {
@@ -70,5 +71,9 @@ public class PlannerController {
 
     private void showGiftMenu() {
         outputView.showGiftMenu(eventManager.getGiftMenu());
+    }
+
+    private void showBenefits() {
+        outputView.showBenefits(eventManager.getBenefits());
     }
 }

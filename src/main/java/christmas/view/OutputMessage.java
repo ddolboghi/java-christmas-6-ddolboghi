@@ -14,4 +14,6 @@ public class OutputMessage {
     public static final String TITLE_OF_EVENT_BADGE = "\n<12월 이벤트 배지>";
     public static final String MENU_AND_AMOUNT = "%s %d개\n";
     public static final String MONETARY_UNIT = "%s원";
+    public static final String BENEFIT_AND_DISCOUNT = "%s: %s원\n";
+    public static final String NO_BENEFITS = "없음";
 }
