@@ -124,10 +124,20 @@ class PlannerControllerTest {
     @ParameterizedTest
     @CsvSource(value = {"25:티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1:-31,423원", "30:초코케이크-1,제로콜라-1:0원"}, delimiter = ':')
     void 총혜택_금액을_출력한다(String userInputVisitDate, String userInputOrder, String printTotalDiscount) {
-        inputValue(userInputVisitDate+"\n"+userInputOrder);
+        inputValue(userInputVisitDate + "\n" + userInputOrder);
 
         plannerController.preview();
 
         assertThat(getOutput()).contains(printTotalDiscount);
+    }
+
+    @Test
+    void 할인_후_예상_결제_금액을_출력한다() {
+        String userInput = "25\n티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1";//165000원
+        inputValue(userInput);
+
+        plannerController.preview();
+
+        assertThat(getOutput()).contains("<할인 후 예상 결제 금액>" + LINE_SEPARATOR + "158,577원");
     }
 }
