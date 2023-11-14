@@ -6,7 +6,7 @@ import static christmas.util.rule.GiftEventRule.NON_GIFT_MENU;
 import christmas.model.event.GiftEvent;
 import christmas.util.Menu;
 
-public class GiftEventLoader {
+public class GiftMenuLoader {
 
     public static String getGiftMenu(int totalCost) {
         if (new GiftEvent(totalCost).isApplied()) {
