@@ -1,6 +1,7 @@
 package christmas.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import christmas.model.event.ChristmasDDayDiscountEvent;
 import christmas.model.event.Event;
@@ -8,8 +9,9 @@ import christmas.model.event.GiftEvent;
 import christmas.model.event.SpecialDiscountEvent;
 import christmas.model.event.WeekdayDiscountEvent;
 import christmas.model.event.WeekendDiscountEvent;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -31,25 +33,29 @@ class BenefitTest {
     }
 
     @Test
-    void 이벤트들중_적용되는_이벤트만_가져온다() {
-        List<Event> events = createEvents(10000, 25, 1, 1);
-        List<Event> appliedEvents = events.stream()
-                .filter(event -> event.getDiscount() > 0)
-                .toList();
+    void 받은_이벤트들중_할인금액이_있는_이벤트만_반환한다() {
+        List<Event> events = createEvents(142000, 3, 2, 2);
         Benefit benefit = createBenefit(events);
+        Set<String> appliedEventsName = Set.of(
+                "크리스마스 디데이 할인",
+                "평일 할인",
+                "특별 할인",
+                "증정 이벤트"
+        );
 
-        assertThat(benefit.getAppliedEvents()).isEqualTo(appliedEvents);
+        Map<String, Integer> appliedEvents = benefit.getAppliedEvents();
+
+        assertThat(appliedEvents.keySet()).containsAll(appliedEventsName);
     }
 
     @Test
-    void 적용되는_이벤트가_하나도_없으면_빈_배열을_반환한다() {
+    void 받은_이벤트들_모두_할인금액이_없으면_빈_목록을_반환한다() {
         List<Event> events = createEvents(55000, 28, 0, 1);
         Benefit benefit = createBenefit(events);
-        List<Event> emptyAppliedEvents = new ArrayList<>();
 
-        List<Event> appliedEvents = benefit.getAppliedEvents();
+        Map<String, Integer> appliedEvents = benefit.getAppliedEvents();
 
-        assertThat(appliedEvents).isEqualTo(emptyAppliedEvents);
+        assertTrue(appliedEvents.isEmpty());
     }
 
     @ParameterizedTest
@@ -64,7 +70,7 @@ class BenefitTest {
         List<Event> events = createEvents(totalCost, visitDate, weekdayMenuAmount, weekendMenuAmount);
         Benefit benefit = createBenefit(events);
 
-        assertThat(benefit.sumDiscounts()).isEqualTo(totalDiscounts);
+        assertThat(benefit.getTotalDiscount()).isEqualTo(totalDiscounts);
     }
 
     @ParameterizedTest
