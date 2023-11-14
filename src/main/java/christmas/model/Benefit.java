@@ -5,7 +5,9 @@ import static christmas.util.rule.GiftEventRule.GIFT_EVENT_NAME;
 
 import christmas.model.event.Event;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Benefit {
     private final List<Event> events;
@@ -14,13 +16,13 @@ public class Benefit {
         this.events = events;
     }
 
-    public List<Event> getAppliedEvents() {
+    public Map<String, Integer> getAppliedEvents() {
         return events.stream()
                 .filter(event -> event.getDiscount() > NON_DISCOUNT_COST)
-                .toList();
+                .collect(Collectors.toMap(Event::getEventName, Event::getDiscount, (a, b) -> b));
     }
 
-    public int sumDiscounts() {
+    public int getTotalDiscount() {
         return events.stream()
                 .mapToInt(Event::getDiscount)
                 .sum();
