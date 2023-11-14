@@ -1,7 +1,8 @@
 package christmas.controller;
 
-import christmas.model.EventManager;
+import christmas.model.Events;
 import christmas.model.OrderManager;
+import christmas.model.GiftEventLoader;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -10,7 +11,7 @@ public class PlannerController {
     private final InputView inputView;
     private final OutputView outputView;
     private OrderManager orderManager;
-    private EventManager eventManager;
+    private Events events;
 
     public PlannerController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
@@ -46,7 +47,7 @@ public class PlannerController {
     private void setManager() {
         visitDate = Integer.parseInt(takeVisitDate());
         orderManager = takeOrder();
-        eventManager = new EventManager(orderManager, visitDate);
+        events = new Events(orderManager, visitDate);
     }
 
     private void showPlanner() {
@@ -73,22 +74,22 @@ public class PlannerController {
     }
 
     private void showGiftMenu() {
-        outputView.showGiftMenu(eventManager.getGiftMenu());
+        outputView.showGiftMenu(GiftEventLoader.getGiftMenu(orderManager.getTotalCost()));
     }
 
     private void showBenefits() {
-        outputView.showBenefits(eventManager.getBenefits());
+        outputView.showBenefits(events.getBenefits());
     }
 
     private void showTotalDiscount() {
-        outputView.showTotalDiscount(eventManager.getTotalDiscount());
+        outputView.showTotalDiscount(events.getTotalDiscount());
     }
 
     private void showTotalCostAfterDiscount() {
-        outputView.showTotalCostAfterDiscount(eventManager.calculateTotalCostAfterDiscount());
+        outputView.showTotalCostAfterDiscount(events.calculateTotalCostAfterDiscount());
     }
 
     private void showGrantedBadge() {
-        outputView.showGrantedBadge(eventManager.grantBadge());
+        outputView.showGrantedBadge(events.grantBadge());
     }
 }
