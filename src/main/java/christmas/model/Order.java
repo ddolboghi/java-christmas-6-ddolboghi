@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class OrderManager {
+public class Order {
     private final String userInputOrder;
     private Map<Menu, Integer> order;
 
-    public OrderManager(String userInputOrder) {
+    public Order(String userInputOrder) {
         this.userInputOrder = userInputOrder;
         DomainValidator.validateMenuOfOrder(getAllMenuOfOrder());
         DomainValidator.validateAmountOfOrder(getAllAmountOfOrder());
