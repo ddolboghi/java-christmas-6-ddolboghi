@@ -25,6 +25,10 @@ public class Order {
         takeOrder();
     }
 
+    public int calculateCostAfterDiscount(int totalDiscountExceptGiftEvent) {
+        return getTotalCost() - totalDiscountExceptGiftEvent;
+    }
+
     public Map<String, Integer> getOrder() {
         return order.keySet().stream()
                 .collect(Collectors.toMap(Menu::getKoreanName, menu -> order.get(menu), (a, b) -> b));
