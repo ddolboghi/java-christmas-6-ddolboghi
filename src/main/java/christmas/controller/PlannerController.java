@@ -2,8 +2,8 @@ package christmas.controller;
 
 import christmas.model.Badge;
 import christmas.model.Benefit;
-import christmas.model.EventsLoader;
-import christmas.model.GiftMenuLoader;
+import christmas.model.Events;
+import christmas.model.GiftMenu;
 import christmas.model.Order;
 import christmas.util.rule.DiscountEventRule;
 import christmas.view.InputView;
@@ -50,7 +50,7 @@ public class PlannerController {
     private void setUp() {
         visitDate = Integer.parseInt(takeVisitDate());
         order = takeOrder();
-        benefit = new Benefit(EventsLoader.loadAllEvents(
+        benefit = new Benefit(Events.list(
                 order.getTotalCost(),
                 visitDate,
                 order.getMenuAmount(DiscountEventRule.WEEKDAY_DISCOUNT_EVENT.getAppliedTarget()),
@@ -81,7 +81,7 @@ public class PlannerController {
     }
 
     private void showGiftMenu() {
-        outputView.showGiftMenu(GiftMenuLoader.getGiftMenu(order.getTotalCost()));
+        outputView.showGiftMenu(GiftMenu.getString(order.getTotalCost()));
     }
 
     private void showBenefits() {

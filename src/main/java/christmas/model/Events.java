@@ -9,9 +9,9 @@ import christmas.model.event.WeekendDiscountEvent;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class EventsLoader {
+public class Events {
 
-    public static List<Event> loadAllEvents(int totalCost, int visitDate, int weekdayDiscountCategory,
+    public static List<Event> list(int totalCost, int visitDate, int weekdayDiscountCategory,
                                      int weekendDiscountCategory) {
         return Stream.of(
                 new GiftEvent(totalCost),
