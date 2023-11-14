@@ -13,23 +13,14 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-class EventManagerTest {
+class EventsTest {
     @Mock
     private OrderManager orderManager;
-    private EventManager eventManager;
+    private Events events;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-    }
-
-    @ParameterizedTest
-    @CsvSource({"120000, 샴페인 1개", "10000, 없음"})
-    void 증정이벤트_적용여부에따라_증정메뉴를_반환한다(int totalCost, String giftMenu) {
-        when(orderManager.getTotalCost()).thenReturn(totalCost);
-        eventManager = new EventManager(orderManager, 31);
-
-        assertThat(eventManager.getGiftMenu()).isEqualTo(giftMenu);
     }
 
     @Test
@@ -38,14 +29,14 @@ class EventManagerTest {
         when(orderManager.getTotalCost()).thenReturn(60000);
         when(orderManager.getMenuAmount("dessert")).thenReturn(1);
         when(orderManager.getMenuAmount("main")).thenReturn(1);
-        eventManager = new EventManager(orderManager, 31);
+        events = new Events(orderManager, 31);
 
         Map<String, Integer> appliedEvents = new HashMap<>();
         appliedEvents.put("평일 할인", 2023);
         appliedEvents.put("특별 할인", 1000);
 
         //when then
-        assertThat(eventManager.getBenefits()).isEqualTo(appliedEvents);
+        assertThat(events.getBenefits()).isEqualTo(appliedEvents);
     }
 
     @Test
@@ -54,10 +45,10 @@ class EventManagerTest {
         when(orderManager.getTotalCost()).thenReturn(18000);
         when(orderManager.getMenuAmount("dessert")).thenReturn(1);
         when(orderManager.getMenuAmount("main")).thenReturn(0);
-        eventManager = new EventManager(orderManager, 30);
+        events = new Events(orderManager, 30);
 
         //when then
-        assertTrue(eventManager.getBenefits().isEmpty());
+        assertTrue(events.getBenefits().isEmpty());
     }
 
     @Test
@@ -65,9 +56,9 @@ class EventManagerTest {
         when(orderManager.getTotalCost()).thenReturn(158000);
         when(orderManager.getMenuAmount("dessert")).thenReturn(0);
         when(orderManager.getMenuAmount("main")).thenReturn(2);
-        eventManager = new EventManager(orderManager, 25);
+        events = new Events(orderManager, 25);
 
-        assertThat(eventManager.getTotalDiscount()).isEqualTo(29400);
+        assertThat(events.getTotalDiscount()).isEqualTo(29400);
     }
 
     @Test
@@ -75,9 +66,9 @@ class EventManagerTest {
         when(orderManager.getTotalCost()).thenReturn(158000);
         when(orderManager.getMenuAmount("dessert")).thenReturn(0);
         when(orderManager.getMenuAmount("main")).thenReturn(2);
-        eventManager = new EventManager(orderManager, 25);
+        events = new Events(orderManager, 25);
 
-        assertThat(eventManager.calculateTotalCostAfterDiscount()).isEqualTo(153600);
+        assertThat(events.calculateTotalCostAfterDiscount()).isEqualTo(153600);
     }
 
     @ParameterizedTest
@@ -86,8 +77,8 @@ class EventManagerTest {
         when(orderManager.getTotalCost()).thenReturn(totalCost);
         when(orderManager.getMenuAmount("dessert")).thenReturn(dessertAmount);
         when(orderManager.getMenuAmount("main")).thenReturn(mainAmount);
-        eventManager = new EventManager(orderManager, visitDate);
+        events = new Events(orderManager, visitDate);
 
-        assertThat(eventManager.grantBadge()).isEqualTo(badge);
+        assertThat(events.grantBadge()).isEqualTo(badge);
     }
 }
