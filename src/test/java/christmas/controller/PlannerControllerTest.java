@@ -46,7 +46,12 @@ class PlannerControllerTest {
 
     @Test
     void 잘못된_방문_날짜를_입력하면_정상적인_값을_입력받을_때까지_재입력받는다() {
-        String userInputWrongVisitDate = " \n1.23\n0\n32\n25\n티본스테이크-1";
+        String userInputWrongVisitDate =
+                " " + LINE_SEPARATOR + "1.23"
+                        + LINE_SEPARATOR + "0"
+                        + LINE_SEPARATOR + "32"
+                        + LINE_SEPARATOR + "31"
+                        + LINE_SEPARATOR + "티본스테이크-1";
         inputValue(userInputWrongVisitDate);
 
         assertDoesNotThrow(plannerController::preview);
@@ -54,7 +59,12 @@ class PlannerControllerTest {
 
     @Test
     void 잘못된_주문메뉴_또는_개수_0을_입력하면_정상적인_값을_입력받을_때까지_재입력받는다() {
-        String userInputWrongMenuAndAmount = " 25\n티본스테이크\n티본스테이크-0\n티본스테이크1\n티본스테이크:1\n티본스테이크-1";
+        String userInputWrongMenuAndAmount =
+                "25" + LINE_SEPARATOR + "티본스테이크"
+                        + LINE_SEPARATOR + "티본스테이크-0"
+                        + LINE_SEPARATOR + "티본스테이크1"
+                        + LINE_SEPARATOR + "티본스테이크:1"
+                        + LINE_SEPARATOR + "티본스테이크-1";
         inputValue(userInputWrongMenuAndAmount);
 
         assertDoesNotThrow(plannerController::preview);
@@ -62,7 +72,7 @@ class PlannerControllerTest {
 
     @Test
     void 정상적인_방문날짜와_주문을_입력하면_방문날짜와_주문메뉴를_출력한다() {
-        String userInput = " 25\n티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1";
+        String userInput = " 25" + LINE_SEPARATOR + "티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1";
         inputValue(userInput);
 
         plannerController.preview();
@@ -72,7 +82,7 @@ class PlannerControllerTest {
 
     @Test
     void 할인_전_총주문_금액을_출력한다() {
-        String userInput = "25\n아이스크림-10";
+        String userInput = "25" + LINE_SEPARATOR + "아이스크림-10";
         inputValue(userInput);
 
         plannerController.preview();
@@ -80,29 +90,19 @@ class PlannerControllerTest {
         assertThat(getOutput()).contains("50,000원");
     }
 
-    @Test
-    void 증정_이벤트_대상이_아니면_증정_메뉴에_없음을_출력한다() {
-        String userInput = "25\n아이스크림-10";
-        inputValue(userInput);
+    @ParameterizedTest
+    @CsvSource(value = {"25:아이스크림-10:없음", "25:티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1:샴페인 1개"}, delimiter = ':')
+    void 증정_메뉴를_출력한다(String userInputVisitDate, String userInputOrder, String giftMenu) {
+        inputValue(userInputVisitDate + LINE_SEPARATOR + userInputOrder);
 
         plannerController.preview();
 
-        assertThat(getOutput()).contains("<증정 메뉴>" + LINE_SEPARATOR + "없음");
+        assertThat(getOutput()).contains("<증정 메뉴>" + LINE_SEPARATOR + giftMenu);
     }
 
     @Test
-    void 증정_이벤트_대상이면_증정_메뉴와_개수를_출력한다() {
-        String userInput = "25\n티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1";
-        inputValue(userInput);
-
-        plannerController.preview();
-
-        assertThat(getOutput()).contains("<증정 메뉴>" + LINE_SEPARATOR + "샴페인 1개");
-    }
-
-    @Test
-    void 이벤트들중_적용된_이벤트를_출력한다() {
-        String userInput = "25\n티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1";//165000원
+    void 적용된_이벤트만_혜택_내역에_출력한다() {
+        String userInput = "25" + LINE_SEPARATOR + "티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1";//165000원
         inputValue(userInput);
 
         plannerController.preview();
@@ -112,8 +112,8 @@ class PlannerControllerTest {
     }
 
     @Test
-    void 적용된_이벤트가_없으면_없음을_출력한다() {
-        String userInput = "30\n초코케이크-1,제로콜라-1";
+    void 적용된_이벤트가_하나도_없으면_없음을_출력한다() {
+        String userInput = "30" + LINE_SEPARATOR + "초코케이크-1,제로콜라-1";
         inputValue(userInput);
 
         plannerController.preview();
@@ -124,30 +124,30 @@ class PlannerControllerTest {
     @ParameterizedTest
     @CsvSource(value = {"25:티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1:-31,423원", "30:초코케이크-1,제로콜라-1:0원"}, delimiter = ':')
     void 총혜택_금액을_출력한다(String userInputVisitDate, String userInputOrder, String printTotalDiscount) {
-        inputValue(userInputVisitDate + "\n" + userInputOrder);
+        inputValue(userInputVisitDate + LINE_SEPARATOR + userInputOrder);
 
         plannerController.preview();
 
-        assertThat(getOutput()).contains(printTotalDiscount);
+        assertThat(getOutput()).contains("<총혜택 금액>" + LINE_SEPARATOR + printTotalDiscount);
     }
 
-    @Test
-    void 할인_후_예상_결제_금액을_출력한다() {
-        String userInput = "25\n티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1";//165000원
-        inputValue(userInput);
+    @ParameterizedTest
+    @CsvSource(value = {"25:티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1:158,577원", "30:아이스크림-10:50,000원"}, delimiter = ':')
+    void 할인_후_예상_결제_금액을_출력한다(String userInputVisitDate, String userInputOrder, String printTotalDiscount) {
+        inputValue(userInputVisitDate + LINE_SEPARATOR + userInputOrder);
 
         plannerController.preview();
 
-        assertThat(getOutput()).contains("<할인 후 예상 결제 금액>" + LINE_SEPARATOR + "158,577원");
+        assertThat(getOutput()).contains("<할인 후 예상 결제 금액>" + LINE_SEPARATOR + printTotalDiscount);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"25:티본스테이크-1,해산물파스타-1,레드와인-1,초코케이크-1:산타", "30:초코케이크-1,제로콜라-1:없음"}, delimiter = ':')
-    void 부여된_배지를_출력한다(String userInputVisitDate, String userInputOrder, String badge) {
-        inputValue(userInputVisitDate + "\n" + userInputOrder);
+    void 부여된_배지를_출력한다(String userInputVisitDate, String userInputOrder, String printBadge) {
+        inputValue(userInputVisitDate + LINE_SEPARATOR + userInputOrder);
 
         plannerController.preview();
 
-        assertThat(getOutput()).contains(badge);
+        assertThat(getOutput()).contains("<12월 이벤트 배지>" + LINE_SEPARATOR + printBadge);
     }
 }
