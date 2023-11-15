@@ -34,7 +34,8 @@ public class PlannerController {
                 order.getTotalCost(),
                 visitDate,
                 order.getMenuAmount(DiscountEventRules.WEEKDAY_DISCOUNT_EVENT.getAppliedTarget()),
-                order.getMenuAmount(DiscountEventRules.WEEKEND_DISCOUNT_EVENT.getAppliedTarget())));
+                order.getMenuAmount(DiscountEventRules.WEEKEND_DISCOUNT_EVENT.getAppliedTarget())
+        ));
     }
 
     private String visitDateRequest() {
@@ -48,13 +49,15 @@ public class PlannerController {
     }
 
     private void showPlanner() {
+        int totalCost = order.getTotalCost();
+        int totalDiscount = benefit.getTotalDiscount();
         outputView.showPlannerTitle(visitDate);
         outputView.showOrderHistory(order.getOrder());
-        outputView.showTotalOrderCost(order.getTotalCost());
-        outputView.showGiftMenu(new GiftEvent(order.getTotalCost()));
+        outputView.showTotalOrderCost(totalCost);
+        outputView.showGiftMenu(new GiftEvent(totalCost));
         outputView.showBenefits(benefit.getAppliedEvents());
-        outputView.showTotalDiscount(benefit.getTotalDiscount());
+        outputView.showTotalDiscount(totalDiscount);
         outputView.showTotalCostAfterDiscount(order.getTotalCostAfterDiscount(benefit.sumDiscountsExceptGiftEvent()));
-        outputView.showGrantedBadge(Badge.grantBadge(benefit.getTotalDiscount()));
+        outputView.showGrantedBadge(Badge.grantBadge(totalDiscount));
     }
 }
