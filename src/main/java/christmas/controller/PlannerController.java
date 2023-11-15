@@ -27,29 +27,9 @@ public class PlannerController {
         showPlanner();
     }
 
-    private String takeVisitDate() {
-        do {
-            try {
-                return inputView.inputVisitDate();
-            } catch (IllegalArgumentException e) {
-                outputView.outputErrorMessage(e);
-            }
-        } while (true);
-    }
-
-    private Order takeOrder() {
-        do {
-            try {
-                return new Order(inputView.inputOrder());
-            } catch (IllegalArgumentException e) {
-                outputView.outputErrorMessage(e);
-            }
-        } while (true);
-    }
-
     private void setUp() {
-        visitDate = Integer.parseInt(takeVisitDate());
-        order = takeOrder();
+        visitDate = Integer.parseInt(visitDateRequest());
+        order = new Order(orderRequest());
         benefit = new Benefit(Events.list(
                 order.getTotalCost(),
                 visitDate,
@@ -57,46 +37,24 @@ public class PlannerController {
                 order.getMenuAmount(DiscountEventRule.WEEKEND_DISCOUNT_EVENT.getAppliedTarget())));
     }
 
+    private String visitDateRequest() {
+        RequestController visitDateRequestController = new VisitDateRequestController(inputView, outputView);
+        return visitDateRequestController.inputRequest();
+    }
+
+    private String orderRequest() {
+        RequestController orderRequestController = new OrderRequestController(inputView, outputView);
+        return orderRequestController.inputRequest();
+    }
+
     private void showPlanner() {
-        showPlannerTitle();
-        showOrder();
-        showTotalCost();
-        showGiftMenu();
-        showBenefits();
-        showTotalDiscount();
-        showTotalCostAfterDiscount();
-        showGrantedBadge();
-    }
-
-    private void showPlannerTitle() {
         outputView.showPlannerTitle(visitDate);
-    }
-
-    private void showOrder() {
         outputView.showOrderHistory(order.getOrder());
-    }
-
-    private void showTotalCost() {
         outputView.showTotalOrderCost(order.getTotalCost());
-    }
-
-    private void showGiftMenu() {
         outputView.showGiftMenu(GiftMenu.getString(order.getTotalCost()));
-    }
-
-    private void showBenefits() {
         outputView.showBenefits(benefit.getAppliedEvents());
-    }
-
-    private void showTotalDiscount() {
         outputView.showTotalDiscount(benefit.getTotalDiscount());
-    }
-
-    private void showTotalCostAfterDiscount() {
         outputView.showTotalCostAfterDiscount(order.calculateCostAfterDiscount(benefit.sumDiscountsExceptGiftEvent()));
-    }
-
-    private void showGrantedBadge() {
         outputView.showGrantedBadge(Badge.grantBadge(benefit.getTotalDiscount()));
     }
 }
