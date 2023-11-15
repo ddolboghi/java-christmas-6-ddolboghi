@@ -1,6 +1,5 @@
 package christmas.model;
 
-import christmas.util.Menu;
 import christmas.validator.DomainValidator;
 import java.util.ArrayList;
 import java.util.Arrays;

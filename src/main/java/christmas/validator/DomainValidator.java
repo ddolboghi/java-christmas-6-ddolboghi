@@ -1,11 +1,10 @@
 package christmas.validator;
 
-import static christmas.util.constant.ValidatorConstant.COMPARE_EQUAL_VALUE_RESULT;
-import static christmas.util.constant.ValidatorConstant.SINGLE_ORDER_CATEGORY;
+import static christmas.util.constant.ValidatorConstant.VALUE_COMPARATOR;
 import static christmas.validator.ErrorMessage.ORDER_ERROR_MESSAGE;
 import static christmas.validator.ErrorMessage.PREFIX;
 
-import christmas.util.Menu;
+import christmas.model.Menu;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
@@ -13,13 +12,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DomainValidator {
+    private static final String PROHIBITED_SINGLE_ORDER_CATEGORY = "drink";
     private static final BigInteger MAX_MENU_AMOUNT = new BigInteger("20");
     private static final String ERROR_MESSAGE = PREFIX + ORDER_ERROR_MESSAGE;
 
     public static void validateMenuOfOrder(List<String> allMenuOfOrder) {
         validateMenuExist(allMenuOfOrder);
         validateDuplicateMenu(allMenuOfOrder);
-        validateOnlyCategory(allMenuOfOrder);
+        validateSingleOrderCategory(allMenuOfOrder);
     }
 
     private static void validateMenuExist(List<String> allMenuOfOrder) {
@@ -40,17 +40,10 @@ public class DomainValidator {
         }
     }
 
-    private static void validateOnlyCategory(List<String> allMenuOfOrder) {
-        if (getOnlyCategoryMenuNames().containsAll(allMenuOfOrder)) {
+    private static void validateSingleOrderCategory(List<String> allMenuOfOrder) {
+        if (Menu.getMenuNamesOfSingleOrderCategory(PROHIBITED_SINGLE_ORDER_CATEGORY).containsAll(allMenuOfOrder)) {
             throw new IllegalArgumentException(ERROR_MESSAGE);
         }
-    }
-
-    private static Set<String> getOnlyCategoryMenuNames() {
-        return Arrays.stream(Menu.values())
-                .filter(menu -> SINGLE_ORDER_CATEGORY.equals(menu.getCategory()))
-                .map(Menu::getKoreanName)
-                .collect(Collectors.toUnmodifiableSet());
     }
 
     public static void validateAmountOfOrder(List<String> allAmountOfOrder) {
@@ -69,7 +62,7 @@ public class DomainValidator {
     }
 
     private static void validateAmountOfOneMenu(String amount) {
-        if (new BigInteger(amount).compareTo(MAX_MENU_AMOUNT) > COMPARE_EQUAL_VALUE_RESULT) {
+        if (new BigInteger(amount).compareTo(MAX_MENU_AMOUNT) > VALUE_COMPARATOR) {
             throw new IllegalArgumentException(ERROR_MESSAGE);
         }
     }

@@ -1,5 +1,7 @@
-package christmas.util;
+package christmas.model;
 
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum Menu {
@@ -32,6 +34,13 @@ public enum Menu {
                 .filter(menu -> menu.koreanName.equals(koreanName))
                 .findFirst()
                 .get();
+    }
+
+    public static Set<String> getMenuNamesOfSingleOrderCategory(String prohibitedSingleOrderCategory) {
+        return Stream.of(Menu.values())
+                .filter(menu -> prohibitedSingleOrderCategory.equals(menu.getCategory()))
+                .map(Menu::getKoreanName)
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     public String getKoreanName() {
