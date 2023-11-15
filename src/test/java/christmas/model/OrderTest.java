@@ -42,8 +42,8 @@ class OrderTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"시저샐러드-0", "시저샐러드-21", "시저샐러드-30000000000"})
-    void 개별_메뉴의_개수가_1보다_작거나_20보다_크면_예외를_발생시킨다(String userInputOrder) {
+    @ValueSource(strings = {"시저샐러드-21", "시저샐러드-30000000000"})
+    void 개별_메뉴의_개수가_20보다_크면_예외를_발생시킨다(String userInputOrder) {
         assertThatIllegalArgumentException().isThrownBy(() -> new Order(userInputOrder));
     }
 

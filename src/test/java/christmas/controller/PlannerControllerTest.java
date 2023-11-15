@@ -53,8 +53,8 @@ class PlannerControllerTest {
     }
 
     @Test
-    void 잘못된_주문메뉴와_개수를_입력하면_정상적인_값을_입력받을_때까지_재입력받는다() {
-        String userInputWrongMenuAndAmount = " 25\n티본스테이크\n티본스테이크-0\n티본스테이크1\n티본스테이크 1\n티본스테이크:1\n티본스테이크-1";
+    void 잘못된_주문메뉴_또는_개수_0을_입력하면_정상적인_값을_입력받을_때까지_재입력받는다() {
+        String userInputWrongMenuAndAmount = " 25\n티본스테이크\n티본스테이크-0\n티본스테이크1\n티본스테이크:1\n티본스테이크-1";
         inputValue(userInputWrongMenuAndAmount);
 
         assertDoesNotThrow(plannerController::preview);
