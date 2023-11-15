@@ -1,7 +1,7 @@
 package christmas.model.event;
 
 import static christmas.util.constant.DiscountConstant.NON_DISCOUNT_COST;
-import static christmas.util.rule.DiscountEventRule.SPECIAL_DISCOUNT_EVENT;
+import static christmas.util.rule.DiscountEventRules.SPECIAL_DISCOUNT_EVENT;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
