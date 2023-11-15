@@ -25,7 +25,7 @@ public class Order {
         takeOrder();
     }
 
-    public int calculateCostAfterDiscount(int totalDiscountExceptGiftEvent) {
+    public int getTotalCostAfterDiscount(int totalDiscountExceptGiftEvent) {
         return getTotalCost() - totalDiscountExceptGiftEvent;
     }
 
