@@ -14,7 +14,7 @@ public class InputValidator {
     private static final BigInteger MONTH_START_DATE = new BigInteger("1");
     private static final BigInteger MONTH_END_DATE = new BigInteger("31");
     private static final Pattern NUMERIC_PATTERN = Pattern.compile("\\d+");
-    private static final Pattern ORDER_PATTERN = Pattern.compile("([가-힣]+-\\d+,)*([가-힣]+-\\d+)$");
+    private static final Pattern ORDER_PATTERN = Pattern.compile("([가-힣]+-[1-9]\\d*,)*([가-힣]+-[1-9]\\d*)$");
 
     public static void validateVisitDate(String userInputVisitDate) {
         validateBlank(userInputVisitDate);

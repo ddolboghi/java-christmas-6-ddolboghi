@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DomainValidator {
-    private static final BigInteger MIN_MENU_AMOUNT = new BigInteger("1");
     private static final BigInteger MAX_MENU_AMOUNT = new BigInteger("20");
     private static final String ERROR_MESSAGE = PREFIX + ORDER_ERROR_MESSAGE;
 
@@ -70,16 +69,8 @@ public class DomainValidator {
     }
 
     private static void validateAmountOfOneMenu(String amount) {
-        if (isUnderMinMenuAmount(amount) || isOverMaxMenuAmount(amount)) {
+        if (new BigInteger(amount).compareTo(MAX_MENU_AMOUNT) > COMPARE_EQUAL_VALUE_RESULT) {
             throw new IllegalArgumentException(ERROR_MESSAGE);
         }
-    }
-
-    private static boolean isUnderMinMenuAmount(String amount) {
-        return new BigInteger(amount).compareTo(MIN_MENU_AMOUNT) < COMPARE_EQUAL_VALUE_RESULT;
-    }
-
-    private static boolean isOverMaxMenuAmount(String amount) {
-        return new BigInteger(amount).compareTo(MAX_MENU_AMOUNT) > COMPARE_EQUAL_VALUE_RESULT;
     }
 }
