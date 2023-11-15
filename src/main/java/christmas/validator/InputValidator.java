@@ -1,6 +1,6 @@
 package christmas.validator;
 
-import static christmas.util.constant.ValidatorConstant.COMPARE_EQUAL_VALUE_RESULT;
+import static christmas.util.constant.ValidatorConstant.VALUE_COMPARATOR;
 import static christmas.validator.ErrorMessage.COMMON_ERROR_MESSAGE;
 import static christmas.validator.ErrorMessage.ORDER_ERROR_MESSAGE;
 import static christmas.validator.ErrorMessage.PREFIX;
@@ -46,11 +46,11 @@ public class InputValidator {
     }
 
     private static boolean isUnderDateRange(String userInputVisitDate) {
-        return new BigInteger(userInputVisitDate).compareTo(MONTH_START_DATE) < COMPARE_EQUAL_VALUE_RESULT;
+        return new BigInteger(userInputVisitDate).compareTo(MONTH_START_DATE) < VALUE_COMPARATOR;
     }
 
     private static boolean isOverDateRange(String userInputVisitDate) {
-        return new BigInteger(userInputVisitDate).compareTo(MONTH_END_DATE) > COMPARE_EQUAL_VALUE_RESULT;
+        return new BigInteger(userInputVisitDate).compareTo(MONTH_END_DATE) > VALUE_COMPARATOR;
     }
 
     private static void validateOrderFormat(String userInputOrder) {
