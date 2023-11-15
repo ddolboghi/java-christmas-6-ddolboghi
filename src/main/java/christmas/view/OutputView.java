@@ -1,11 +1,12 @@
 package christmas.view;
 
 import static christmas.util.constant.DiscountConstant.NON_DISCOUNT_COST;
+import static christmas.util.rule.GiftEventRule.GIFT_EVENT;
 import static christmas.view.OutputMessage.BENEFIT_AND_DISCOUNT;
 import static christmas.view.OutputMessage.INTRODUCTION_OF_PLANNER;
 import static christmas.view.OutputMessage.MENU_AND_AMOUNT;
 import static christmas.view.OutputMessage.MONETARY_UNIT;
-import static christmas.view.OutputMessage.NO_BENEFITS;
+import static christmas.view.OutputMessage.NOT_APPLIED_EVENT;
 import static christmas.view.OutputMessage.TITLE_OF_BENEFITS;
 import static christmas.view.OutputMessage.TITLE_OF_EVENT_BADGE;
 import static christmas.view.OutputMessage.TITLE_OF_GIFT_MENU;
@@ -16,6 +17,7 @@ import static christmas.view.OutputMessage.TITLE_OF_TOTAL_COST_BEFORE_DISCOUNT;
 import static christmas.view.OutputMessage.TITLE_OF_TOTAL_DISCOUNT;
 
 import christmas.io.Output;
+import christmas.model.event.Event;
 import java.text.DecimalFormat;
 import java.util.Map;
 
@@ -49,14 +51,18 @@ public class OutputView {
         Output.writeLine(String.format(MONETARY_UNIT, thousandUnitFormat.format(totalCost)));
     }
 
-    public void showGiftMenu(String presentationMenu) {
+    public void showGiftMenu(Event giftEvent) {
         Output.writeLine(TITLE_OF_GIFT_MENU);
-        Output.writeLine(presentationMenu);
+        String giftMenu = NOT_APPLIED_EVENT;
+        if (giftEvent.isApplied()) {
+            giftMenu = String.format(MENU_AND_AMOUNT, GIFT_EVENT.getGiftMenu(), GIFT_EVENT.getGiftAmount());
+        }
+        Output.writeLine(giftMenu);
     }
 
     public void showBenefits(Map<String, Integer> appliedEvents) {
         Output.writeLine(TITLE_OF_BENEFITS);
-        String benefits = NO_BENEFITS;
+        String benefits = NOT_APPLIED_EVENT;
         if (!appliedEvents.isEmpty()) {
             benefits = createBenefits(appliedEvents);
         }

@@ -1,12 +1,10 @@
 package christmas.model.event;
 
 import static christmas.util.constant.DiscountConstant.NON_DISCOUNT_COST;
-import static christmas.util.rule.GiftEventRule.GIFT_EVENT_NAME;
-import static christmas.util.rule.GiftEventRule.TOTAL_COST_CRITERIA;
-
-import christmas.util.Menu;
+import static christmas.util.rule.GiftEventRule.GIFT_EVENT;
 
 public class GiftEvent implements Event {
+    public static final int TOTAL_COST_CRITERIA = 120000;
     private final int totalCost;
 
     public GiftEvent(int totalCost) {
@@ -15,13 +13,13 @@ public class GiftEvent implements Event {
 
     @Override
     public String getEventName() {
-        return GIFT_EVENT_NAME;
+        return GIFT_EVENT.getEventName();
     }
 
     @Override
     public int getDiscount() {
         if (isApplied()) {
-            return Menu.CHAMPAGNE.getPrice();
+            return GIFT_EVENT.getDiscountCost();
         }
         return NON_DISCOUNT_COST;
     }

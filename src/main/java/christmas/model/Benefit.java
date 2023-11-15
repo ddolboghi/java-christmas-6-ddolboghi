@@ -1,12 +1,11 @@
 package christmas.model;
 
 import static christmas.util.constant.DiscountConstant.NON_DISCOUNT_COST;
-import static christmas.util.rule.GiftEventRule.GIFT_EVENT_NAME;
+import static christmas.util.rule.GiftEventRule.GIFT_EVENT;
 
 import christmas.model.event.Event;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Benefit {
@@ -30,7 +29,7 @@ public class Benefit {
 
     public int sumDiscountsExceptGiftEvent() {
         return events.stream()
-                .filter(event -> !Objects.equals(event.getEventName(), GIFT_EVENT_NAME))
+                .filter(event -> !event.getEventName().equals(GIFT_EVENT.getEventName()))
                 .mapToInt(Event::getDiscount)
                 .sum();
     }

@@ -3,8 +3,8 @@ package christmas.controller;
 import christmas.model.Badge;
 import christmas.model.Benefit;
 import christmas.model.Events;
-import christmas.model.GiftMenu;
 import christmas.model.Order;
+import christmas.model.event.GiftEvent;
 import christmas.util.rule.DiscountEventRule;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -51,7 +51,7 @@ public class PlannerController {
         outputView.showPlannerTitle(visitDate);
         outputView.showOrderHistory(order.getOrder());
         outputView.showTotalOrderCost(order.getTotalCost());
-        outputView.showGiftMenu(GiftMenu.getString(order.getTotalCost()));
+        outputView.showGiftMenu(new GiftEvent(order.getTotalCost()));
         outputView.showBenefits(benefit.getAppliedEvents());
         outputView.showTotalDiscount(benefit.getTotalDiscount());
         outputView.showTotalCostAfterDiscount(order.getTotalCostAfterDiscount(benefit.sumDiscountsExceptGiftEvent()));
