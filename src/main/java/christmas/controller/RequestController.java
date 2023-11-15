@@ -17,7 +17,7 @@ public abstract class RequestController {
             try {
                 return input();
             } catch (IllegalArgumentException e) {
-                outputView.outputErrorMessage(e);
+                outputView.printErrorMessage(e);
             }
         } while (true);
     }

@@ -22,7 +22,7 @@ public class PlannerController {
     }
 
     public void preview() {
-        outputView.introPlanner();
+        outputView.printIntro();
         setUp();
         showPlanner();
     }
@@ -51,13 +51,13 @@ public class PlannerController {
     private void showPlanner() {
         int totalCost = order.getTotalCost();
         int totalDiscount = benefit.getTotalDiscount();
-        outputView.showPlannerTitle(visitDate);
-        outputView.showOrderHistory(order.getOrder());
-        outputView.showTotalOrderCost(totalCost);
-        outputView.showGiftMenu(new GiftEvent(totalCost));
-        outputView.showBenefits(benefit.getAppliedEvents());
-        outputView.showTotalDiscount(totalDiscount);
-        outputView.showTotalCostAfterDiscount(order.getTotalCostAfterDiscount(benefit.sumDiscountsExceptGiftEvent()));
-        outputView.showGrantedBadge(Badge.grantBadge(totalDiscount));
+        outputView.printPlannerTitle(visitDate);
+        outputView.printOrderHistory(order.getOrder());
+        outputView.printTotalOrderCost(totalCost);
+        outputView.printGiftMenu(new GiftEvent(totalCost));
+        outputView.printBenefits(benefit.getAppliedEvents());
+        outputView.printTotalDiscount(totalDiscount);
+        outputView.printTotalCostAfterDiscount(order.getTotalCostAfterDiscount(benefit.sumDiscountsExceptGiftEvent()));
+        outputView.printGrantedBadge(Badge.grantBadge(totalDiscount));
     }
 }

@@ -25,19 +25,19 @@ public class OutputView {
     private final DecimalFormat thousandUnitFormat = new DecimalFormat("#,###");
     private final DecimalFormat minusThousandUnitFormat = new DecimalFormat("-#,###");
 
-    public void outputErrorMessage(IllegalArgumentException e) {
+    public void printErrorMessage(IllegalArgumentException e) {
         Output.writeLine(e.getMessage());
     }
 
-    public void introPlanner() {
+    public void printIntro() {
         Output.writeLine(INTRODUCTION_OF_PLANNER);
     }
 
-    public void showPlannerTitle(int visitDate) {
+    public void printPlannerTitle(int visitDate) {
         Output.writeLine(String.format(TITLE_OF_PLANNER, visitDate));
     }
 
-    public void showOrderHistory(Map<String, Integer> orderHistory) {
+    public void printOrderHistory(Map<String, Integer> orderHistory) {
         Output.writeLine(TITLE_OF_ORDER_MENU);
         StringBuilder orderHistoryBuilder = new StringBuilder(orderHistory.size());
         for (String menuName : orderHistory.keySet()) {
@@ -46,12 +46,12 @@ public class OutputView {
         Output.writeLine(orderHistoryBuilder.toString().trim());
     }
 
-    public void showTotalOrderCost(int totalCost) {
+    public void printTotalOrderCost(int totalCost) {
         Output.writeLine(TITLE_OF_TOTAL_COST_BEFORE_DISCOUNT);
         Output.writeLine(String.format(MONETARY_UNIT, thousandUnitFormat.format(totalCost)));
     }
 
-    public void showGiftMenu(Event giftEvent) {
+    public void printGiftMenu(Event giftEvent) {
         Output.writeLine(TITLE_OF_GIFT_MENU);
         String giftMenu = NOT_APPLIED_EVENT;
         if (giftEvent.isApplied()) {
@@ -60,7 +60,7 @@ public class OutputView {
         Output.writeLine(giftMenu);
     }
 
-    public void showBenefits(Map<String, Integer> appliedEvents) {
+    public void printBenefits(Map<String, Integer> appliedEvents) {
         Output.writeLine(TITLE_OF_BENEFITS);
         String benefits = NOT_APPLIED_EVENT;
         if (!appliedEvents.isEmpty()) {
@@ -79,7 +79,7 @@ public class OutputView {
         return benefitBuilder.toString().trim();
     }
 
-    public void showTotalDiscount(int totalDiscount) {
+    public void printTotalDiscount(int totalDiscount) {
         Output.writeLine(TITLE_OF_TOTAL_DISCOUNT);
         Output.writeLine(getPrintTotalDiscount(totalDiscount));
     }
@@ -91,12 +91,12 @@ public class OutputView {
         return String.format(MONETARY_UNIT, minusThousandUnitFormat.format(totalDiscount));
     }
 
-    public void showTotalCostAfterDiscount(int totalCostAfterDiscount) {
+    public void printTotalCostAfterDiscount(int totalCostAfterDiscount) {
         Output.writeLine(TITLE_OF_TOTAL_COST_AFTER_DISCOUNT);
         Output.writeLine(String.format(MONETARY_UNIT, thousandUnitFormat.format(totalCostAfterDiscount)));
     }
 
-    public void showGrantedBadge(String grantedBadge) {
+    public void printGrantedBadge(String grantedBadge) {
         Output.writeLine(TITLE_OF_EVENT_BADGE);
         Output.writeLine(grantedBadge);
     }
