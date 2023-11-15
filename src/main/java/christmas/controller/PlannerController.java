@@ -54,7 +54,7 @@ public class PlannerController {
         outputView.showGiftMenu(GiftMenu.getString(order.getTotalCost()));
         outputView.showBenefits(benefit.getAppliedEvents());
         outputView.showTotalDiscount(benefit.getTotalDiscount());
-        outputView.showTotalCostAfterDiscount(order.calculateCostAfterDiscount(benefit.sumDiscountsExceptGiftEvent()));
+        outputView.showTotalCostAfterDiscount(order.getTotalCostAfterDiscount(benefit.sumDiscountsExceptGiftEvent()));
         outputView.showGrantedBadge(Badge.grantBadge(benefit.getTotalDiscount()));
     }
 }

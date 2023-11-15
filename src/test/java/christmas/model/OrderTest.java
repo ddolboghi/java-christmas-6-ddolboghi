@@ -89,7 +89,7 @@ class OrderTest {
         void 총혜택_금액을_받아_할인_후_예상_결제_금액을_계산한다() {
             int totalDiscount = 30000;
 
-            assertThat(order.calculateCostAfterDiscount(totalDiscount)).isEqualTo(112000);
+            assertThat(order.getTotalCostAfterDiscount(totalDiscount)).isEqualTo(112000);
         }
 
         private Map<String, Integer> createOrder() {
