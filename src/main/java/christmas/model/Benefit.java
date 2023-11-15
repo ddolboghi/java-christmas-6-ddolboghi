@@ -1,6 +1,6 @@
 package christmas.model;
 
-import static christmas.util.constant.DiscountEventConst.NON_DISCOUNT_COST;
+import static christmas.util.constant.DiscountConstant.NON_DISCOUNT_COST;
 import static christmas.util.rule.GiftEventRule.GIFT_EVENT_NAME;
 
 import christmas.model.event.Event;

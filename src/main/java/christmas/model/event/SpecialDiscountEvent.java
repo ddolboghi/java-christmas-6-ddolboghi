@@ -1,7 +1,6 @@
 package christmas.model.event;
 
-import static christmas.util.constant.DiscountEventConst.CHRISTMAS_DATE;
-import static christmas.util.constant.DiscountEventConst.NON_DISCOUNT_COST;
+import static christmas.util.constant.DiscountConstant.NON_DISCOUNT_COST;
 import static christmas.util.rule.DiscountEventRule.SPECIAL_DISCOUNT_EVENT;
 
 import java.time.DayOfWeek;
@@ -9,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class SpecialDiscountEvent extends DiscountEvent {
+    private static final int CHRISTMAS_DATE = 25;
     private final List<Integer> specialDays;
 
     public SpecialDiscountEvent(int visitDate) {

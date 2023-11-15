@@ -1,6 +1,6 @@
 package christmas.view;
 
-import static christmas.util.constant.DiscountEventConst.NON_DISCOUNT_COST;
+import static christmas.util.constant.DiscountConstant.NON_DISCOUNT_COST;
 import static christmas.view.OutputMessage.BENEFIT_AND_DISCOUNT;
 import static christmas.view.OutputMessage.INTRODUCTION_OF_PLANNER;
 import static christmas.view.OutputMessage.MENU_AND_AMOUNT;

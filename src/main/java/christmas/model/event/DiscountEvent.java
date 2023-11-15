@@ -1,9 +1,5 @@
 package christmas.model.event;
 
-import static christmas.util.constant.DiscountEventConst.EVENT_MONTH;
-import static christmas.util.constant.DiscountEventConst.EVENT_START_DATE;
-import static christmas.util.constant.DiscountEventConst.EVENT_YEAR;
-
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
@@ -11,6 +7,9 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 public abstract class DiscountEvent implements Event {
+    private static final int EVENT_YEAR = 2023;
+    private static final int EVENT_MONTH = 12;
+    private static final int EVENT_START_DATE = 1;
     protected int visitDate;
 
     public DiscountEvent(int visitDate) {
