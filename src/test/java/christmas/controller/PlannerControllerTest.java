@@ -62,8 +62,8 @@ class PlannerControllerTest {
         String userInputWrongMenuAndAmount =
                 "25" + LINE_SEPARATOR + "티본스테이크"
                         + LINE_SEPARATOR + "티본스테이크-0"
-                        + LINE_SEPARATOR + "티본스테이크1"
-                        + LINE_SEPARATOR + "티본스테이크:1"
+                        + LINE_SEPARATOR + "티본스테이크-21"
+                        + LINE_SEPARATOR + "티본스테이크-300000000000"
                         + LINE_SEPARATOR + "티본스테이크-1";
         inputValue(userInputWrongMenuAndAmount);
 
