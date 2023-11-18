@@ -29,7 +29,7 @@ public class PlannerController {
 
     private void setUp() {
         visitDate = Integer.parseInt(visitDateRequest());
-        order = new Order(orderRequest());
+        order = orderRequest();
         benefit = new Benefit(Events.list(
                 order.getTotalCost(),
                 visitDate,
@@ -39,13 +39,23 @@ public class PlannerController {
     }
 
     private String visitDateRequest() {
-        RequestController visitDateRequestController = new VisitDateRequestController(inputView, outputView);
-        return visitDateRequestController.inputRequest();
+        do {
+            try {
+                return inputView.inputVisitDate();
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e);
+            }
+        } while (true);
     }
 
-    private String orderRequest() {
-        RequestController orderRequestController = new OrderRequestController(inputView, outputView);
-        return orderRequestController.inputRequest();
+    private Order orderRequest() {
+        do {
+            try {
+                return new Order(inputView.inputOrder());
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e);
+            }
+        } while (true);
     }
 
     private void showPlanner() {
